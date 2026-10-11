@@ -21,13 +21,16 @@
      book      open book with rising letters (educational app)
      helix     career helix, one node per timeline entry
      sphere    skills sphere
+     toolbox   rotating cube lattice (used for services)
      knot      particle knot
 
    Section fields (all optional except id and scene):
      id, nav (label in the top bar), side ('l' or 'r' for the text column),
      eyebrow, title, lede, body[], stats[{value,label}], more[], notes[],
      tags[], cta[{label,href,primary}], mono, sceneOptions{}
-   Special types:  type:'hero' | 'timeline' | 'skills' | 'contact'
+   Special types:  type:'hero' | 'timeline' | 'skills' | 'services' | 'projects' | 'testimonials' | 'contact'
+   (services, projects and testimonials read the lists of the same name below and
+   stay hidden while their list is empty)
    ========================================================================== */
 window.PORTFOLIO = {
   theme: {
@@ -45,8 +48,21 @@ window.PORTFOLIO = {
     location: 'Bengaluru, India',
     description: 'Senior Android Engineer in Bengaluru. Kotlin, Jetpack Compose, WebRTC and BLE. Previously at Meta and Sony India.',
     email: 'uhimanshuu@gmail.com',
+    emailSubject: 'Android project enquiry',   /* pre-filled subject of the "Email me" button */
     phone: '',                 /* leave empty to keep your number off the public page */
-    links: { linkedin: '', github: '' },   /* paste full URLs, empty ones are hidden */
+    /* Paste full URLs. Empty ones are hidden. You can add more keys:
+       linkedin, github, gitlab, x, medium, youtube, stackoverflow, devto, upwork, toptal, fiverr, behance */
+    links: { linkedin: '', github: '', upwork: '' },
+    resumeUrl: '',             /* e.g. 'assets/Himanshu_Upadhyay_Resume.pdf' once you add the file */
+    bookingUrl: '',            /* e.g. a Calendly or Cal.com link for "Book a call" */
+    /* The green pill at the top of the page. Set show to false to hide it. */
+    availability: { show: true, text: 'Open to freelance, part-time and full-time work' },
+    /* Small facts shown in the contact panel: [label, value] */
+    facts: [
+      ['Based in', 'Bengaluru, India (IST, UTC+5:30)'],
+      ['Languages', 'English, Hindi'],
+      ['Engagements', 'Freelance projects, part-time contracts, full-time roles']
+    ],
     credit: 'Built with three.js'
   },
 
@@ -57,8 +73,8 @@ window.PORTFOLIO = {
       lede: 'I build Android apps that talk to hardware, stream in real time and keep working on a bad connection.',
       tags: ['Kotlin', 'Jetpack Compose', 'WebRTC', 'BLE'],
       cta: [
-        { label: 'See the work', href: '#meta', primary: true },
-        { label: 'Get in touch', href: '#contact' }
+        { label: 'Work with me', href: '#hire', primary: true },
+        { label: 'See the work', href: '#meta' }
       ],
       mono: '7+ years · led a team of 5 · Meta, Sony India',
       sceneOptions: { title: 'Provisioning' }
@@ -158,12 +174,58 @@ window.PORTFOLIO = {
       title: 'What I work with'
     },
     {
+      id: 'hire', type: 'services', nav: 'Hire me', scene: 'toolbox',
+      eyebrow: 'Work with me',
+      title: 'Freelance, part-time or full-time',
+      body: ['I take on Android projects alongside or instead of a day job. Tell me what you need shipped and I will tell you how I would approach it.']
+    },
+    /* Hidden until the "projects" list below has entries. */
+    {
+      id: 'projects', type: 'projects', nav: 'Projects', scene: 'phone',
+      eyebrow: 'Selected projects',
+      title: 'Things you can open and try',
+      sceneOptions: { title: 'Projects' }
+    },
+    /* Hidden until the "testimonials" list below has entries. */
+    {
+      id: 'kind-words', type: 'testimonials', scene: 'knot',
+      eyebrow: 'Kind words',
+      title: 'What people say'
+    },
+    {
       id: 'contact', type: 'contact', nav: 'Contact', scene: 'knot',
       eyebrow: 'Contact',
       title: "Let's build something that ships",
       body: ['Talk to me about Android, real-time streaming or device connectivity.']
     }
   ],
+
+  /* "Work with me" cards. Edit freely. */
+  services: [
+    { title: 'Android app development', text: 'Kotlin and Jetpack Compose apps with MVVM or MVI, offline-first data and clean architecture, from the first screen to the Play Store release.', tags: ['Kotlin', 'Compose', 'Play Store'] },
+    { title: 'Companion apps for hardware', text: 'BLE, Bluetooth and Wi-Fi Direct pairing and provisioning for AR/VR and other connected devices.', tags: ['BLE', 'Wi-Fi Direct'] },
+    { title: 'Real-time video and audio', text: 'WebRTC calls, live streaming and multi-device sync, wired to your backend APIs.', tags: ['WebRTC', 'Streaming'] },
+    { title: 'Rescue and modernise', text: 'Crash and performance audits, Compose migration, test coverage and CI for an app that already exists.', tags: ['Crashlytics', 'Espresso', 'CI'] },
+    { title: 'Training and code review', text: 'Live Kotlin and Android sessions for learners and teams, plus code reviews that raise the standard.', tags: ['Kotlin', 'Mentoring'] }
+  ],
+
+  /* Add projects you can show publicly. The section appears as soon as there is one entry.
+     Template (copy, paste, fill in):
+  projects: [
+    { title: 'Compose offline notes', role: 'Personal project', text: 'One sentence on what it does and what was hard.',
+      tags: ['Kotlin', 'Compose', 'Room'],
+      links: [{ label: 'Code', href: 'https://github.com/you/repo' }, { label: 'Demo video', href: 'https://youtu.be/...' }] }
+  ],
+  */
+  projects: [],
+
+  /* Real quotes only, with permission. The section appears as soon as there is one entry.
+     Template:
+  testimonials: [
+    { quote: 'What they said.', name: 'Their name', role: 'Their role, company' }
+  ],
+  */
+  testimonials: [],
 
   /* Newest first. "short" is the label on the 3D helix node. */
   timeline: [

@@ -117,7 +117,7 @@
   S.headset = function (o, opt, X) {
     var C = PF.col, grp = new THREE.Group(); o.add(grp);
     var hs = makeHeadset(), hsg = new THREE.Group();
-    hsg.add(hs); hsg.scale.setScalar(0.8); hsg.position.set(0, 0.3, 0); grp.add(hsg);
+    hsg.add(hs); hsg.scale.setScalar(1.05); hsg.position.set(0, 0.3, 0); grp.add(hsg);
 
     var c1 = makeController(1), c2 = makeController(-1);
     c1.position.set(1.75, -0.8, 0.3); c1.rotation.z = -0.5; c2.position.set(2.35, -0.3, -0.2); c2.rotation.z = -0.2;
@@ -154,8 +154,8 @@
     devs.frustumCulled = false;
     var d = new THREE.Object3D();
     for (var k = 0; k < NDEV; k++) {
-      var a = k / NDEV * TAU * 2, rad = 4.3 + (k % 3) * 0.55;
-      d.position.set(Math.cos(a) * rad, Math.sin(a) * rad * 0.75, -3 - (k % 4) * 0.5);
+      var a = k / NDEV * TAU * 2, rad = 3.5 + (k % 3) * 0.45;
+      d.position.set(Math.cos(a) * rad, Math.sin(a) * rad * 0.7, -3.5 - (k % 4) * 0.5);
       d.rotation.set(0, 0, a + Math.PI / 2); d.updateMatrix(); devs.setMatrixAt(k, d.matrix);
     }
     devs.instanceMatrix.needsUpdate = true;
@@ -441,6 +441,24 @@
         s.getWorldPosition(v);
         s.material.opacity = Math.max(0.2, Math.min(1, 1.3 - (v.distanceTo(X.camera.position) - 5.5) / 5.5));
       });
+    };
+  };
+
+  /* ---------- services: cube lattice that breathes apart and back ---------- */
+  S.toolbox = function (o) {
+    var C = PF.col, g = new THREE.Group(); o.add(g);
+    var geo = new THREE.BoxGeometry(0.5, 0.5, 0.5), edge = new THREE.EdgesGeometry(geo);
+    var cubes = [];
+    for (var x = -1; x <= 1; x++) for (var y = -1; y <= 1; y++) for (var z = -1; z <= 1; z++) {
+      var lit = (x + y + z + 3) % 4 === 0;
+      var m = new THREE.Mesh(geo, mat(lit ? C.amber : 0x151c2b, 0.6, 0.35, lit ? { emissive: C.amber, emissiveIntensity: 0.35 } : null));
+      m.add(new THREE.LineSegments(edge, new THREE.LineBasicMaterial({ color: C.blue, transparent: true, opacity: 0.8 })));
+      m.userData.base = new THREE.Vector3(x, y, z); g.add(m); cubes.push(m);
+    }
+    return function (t) {
+      var st = PF.state, spread = 0.62 + 0.18 * Math.sin(t * 0.8);
+      g.rotation.y = t * 0.3 + st.mx * 0.3; g.rotation.x = 0.5 + Math.sin(t * 0.2) * 0.2 - st.my * 0.15;
+      cubes.forEach(function (m) { m.position.copy(m.userData.base).multiplyScalar(spread * 1.9); m.rotation.y = t * 0.2; });
     };
   };
 

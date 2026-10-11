@@ -25,7 +25,7 @@ a{color:inherit}
 .nogl body{background:radial-gradient(60% 50% at 80% 8%,rgba(77,141,255,.2),transparent),radial-gradient(40% 40% at 10% 60%,rgba(255,179,71,.08),transparent),var(--ink)}
 
 .progress{position:fixed;top:0;left:0;right:0;height:2px;background:var(--amber);transform:scaleX(0);transform-origin:0 50%;z-index:7}
-.bar{position:fixed;top:0;left:0;right:0;z-index:6;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:calc(env(safe-area-inset-top,0px) + 12px) clamp(16px,4vw,48px) 12px;background:linear-gradient(to bottom,var(--ink),transparent)}
+.bar{position:fixed;top:0;left:0;right:0;z-index:6;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:calc(env(safe-area-inset-top,0px) + 12px) clamp(16px,4vw,48px) 12px;background:linear-gradient(to bottom,var(--ink) 60%,transparent)}
 .bar .mark{font:700 1rem var(--f-display);letter-spacing:-.01em;text-decoration:none}
 .bar nav{display:flex;gap:clamp(.9rem,2.4vw,1.8rem)}
 .bar nav a{font:500 .76rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--mute);padding:.4rem 0}
@@ -81,20 +81,39 @@ h2{font-weight:700;font-size:clamp(1.8rem,3.8vw,2.7rem);line-height:1.05;letter-
 .skills dt{font:500 .72rem/1.9 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--blue)}
 .skills dd{margin:0;font-size:.95rem;color:var(--text-2)}
 
+.copy p.pill{display:inline-flex;align-items:center;gap:.55rem;align-self:flex-start;max-width:none;padding:.35rem .8rem .35rem .65rem;border:1px solid var(--line);border-radius:999px;font:500 .78rem/1.3 var(--f-mono);letter-spacing:.02em;color:var(--text-2)}
+.pill .dot{width:8px;height:8px;border-radius:50%;background:#3ddc97;box-shadow:0 0 0 0 rgba(61,220,151,.6);animation:ping 2.2s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 8px rgba(61,220,151,0)}100%{box-shadow:0 0 0 0 rgba(61,220,151,0)}}
+
+.cards{list-style:none;margin:.2rem 0 0;padding:0;display:flex;flex-direction:column;gap:.9rem}
+.cards li{display:flex;flex-direction:column;gap:.35rem;padding-top:.9rem;border-top:1px solid var(--line)}
+.cards h3{margin:0;font:600 1.12rem/1.3 var(--f-display);letter-spacing:-.01em}
+.cards p{font-size:.95rem}
+.copy blockquote.quote{margin:0;font:500 1.15rem/1.5 var(--f-display);color:var(--text)}
+.linklike{padding:0;border:0;background:none;color:inherit;font:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.linklike:hover{color:var(--text)}
+
 .mail{display:flex;flex-wrap:wrap;align-items:center;gap:.8rem}
 .email{font:500 clamp(1.05rem,3.6vw,1.5rem) var(--f-mono);overflow-wrap:anywhere;user-select:all;color:var(--text)}
 footer{position:relative;z-index:1;padding:1.5rem clamp(16px,5vw,72px) 2rem;font:400 .78rem var(--f-mono);color:var(--mute);display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem}
 
 @media (max-width:819px){
   .dots{display:none}
-  .st{align-items:flex-end;padding-block:36vh 5vh}
+  /* Phones: the top third of the screen belongs to the 3D scene. Text scrolls underneath and fades out as it enters that window. */
+  main{
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0,transparent 28vh,#000 36vh);
+    mask-image:linear-gradient(to bottom,transparent 0,transparent 28vh,#000 36vh);
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0,transparent 28svh,#000 36svh);
+    mask-image:linear-gradient(to bottom,transparent 0,transparent 28svh,#000 36svh);
+  }
+  .st{align-items:flex-end;padding-block:38vh 5vh;padding-block:38svh 5svh}
   .st.l,.st.r{justify-content:center}
-  .copy,.copy.wide{width:100%}
-  .hero .copy{background:var(--scrim);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid var(--line);padding:clamp(20px,3vw,36px)}
+  .copy,.copy.wide{width:100%;background:var(--ink);-webkit-backdrop-filter:none;backdrop-filter:none}
+  .hero .copy{background:var(--ink);border:1px solid var(--line);padding:clamp(20px,3vw,36px)}
 }
 @media (max-width:560px){
   .bar nav a:not(.keep){display:none}
   .skills{grid-template-columns:minmax(0,1fr)}
   .skills dd{margin-bottom:.4rem}
 }
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn,.tl li,.dots a::before{transition:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn,.tl li,.dots a::before{transition:none}.pill .dot{animation:none}}
