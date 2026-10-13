@@ -11,7 +11,9 @@
   function mat(color, m, r, extra) {
     var o = { color: color, metalness: m == null ? 0.5 : m, roughness: r == null ? 0.4 : r };
     if (extra) for (var k in extra) o[k] = extra[k];
-    return new THREE.MeshStandardMaterial(o);
+    if (o.metalness >= 0.3 && o.clearcoat == null) { o.clearcoat = 0.7; o.clearcoatRoughness = 0.25; }
+    if (o.envMapIntensity == null) o.envMapIntensity = 1.8;
+    return new THREE.MeshPhysicalMaterial(o);   /* picks up the reflections of the studio environment set in app.js */
   }
   function basic(color, opacity, extra) {
     var o = { color: color };
@@ -32,7 +34,7 @@
     var g = new THREE.BufferGeometry();
     g.setAttribute('position', new THREE.BufferAttribute(arr, 3));
     var p = new THREE.Points(g, new THREE.PointsMaterial({
-      color: color, size: size, transparent: true, opacity: opacity == null ? 1 : opacity,
+      color: color, size: size, transparent: true, opacity: opacity == null ? 1 : opacity, map: PF.dotTex(), alphaTest: 0.02,
       blending: additive ? THREE.AdditiveBlending : THREE.NormalBlending, depthWrite: !additive
     }));
     p.frustumCulled = false;
@@ -69,7 +71,7 @@
   /* ---------- AR/VR headset ---------- */
   function makeHeadset() {
     var C = PF.col, g = new THREE.Group();
-    var shell = mat(0x1a2130, 0.35, 0.5), dark = mat(0x0b0f16, 0.2, 0.7);
+    var shell = mat(0x3a4a6b, 0.55, 0.32), dark = mat(0x0b0f16, 0.2, 0.7);
     var visor = new THREE.ExtrudeGeometry(PF.rrShape(2.0, 1.0, 0.36), { depth: 0.55, bevelEnabled: true, bevelThickness: 0.07, bevelSize: 0.07, bevelSegments: 5, curveSegments: 16 });
     visor.translate(0, 0, -0.275);
     g.add(new THREE.Mesh(visor, shell));
@@ -100,7 +102,7 @@
   }
 
   function makeController(flip) {
-    var C = PF.col, g = new THREE.Group(), m = mat(0x1a2130, 0.4, 0.5);
+    var C = PF.col, g = new THREE.Group(), m = mat(0x3a4a6b, 0.55, 0.32);
     var ring = new THREE.Mesh(new THREE.TorusGeometry(0.26, 0.045, 12, 40), m);
     ring.position.set(0, 0.42, 0); ring.rotation.x = 0.5; g.add(ring);
     var grip = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.095, 0.62, 16), m);
@@ -224,12 +226,12 @@
   S.chain = function (o, opt) {
     var C = PF.col, labels = opt.labels || ['Ethereum', 'Hyperledger', 'NFT', 'Identity', 'Web3'];
     var n = labels.length, R = 1.9, g = new THREE.Group(); o.add(g);
-    g.rotation.x = 0.45;
+    g.rotation.x = 0.45; g.scale.setScalar(0.82);
     var pos = [], blocks = [], boxGeo = new THREE.BoxGeometry(0.8, 0.8, 0.8), edgeGeo = new THREE.EdgesGeometry(boxGeo);
     for (var k = 0; k < n; k++) {
       var a = k / n * TAU, p = new THREE.Vector3(Math.cos(a) * R, Math.sin(k * 1.3) * 0.3, Math.sin(a) * R);
       pos.push(p);
-      var m = new THREE.Mesh(boxGeo, mat(0x151c2b, 0.6, 0.35, { emissive: C.blue, emissiveIntensity: 0 }));
+      var m = new THREE.Mesh(boxGeo, mat(0x2c3c60, 0.6, 0.3, { emissive: C.blue, emissiveIntensity: 0 }));
       m.position.copy(p); m.add(new THREE.LineSegments(edgeGeo, new THREE.LineBasicMaterial({ color: C.blue })));
       g.add(m); blocks.push({ m: m, s: 1 });
       var lb = PF.makeLabel(labels[k], '#e8ecf3', 30); lb.position.set(p.x, p.y + 0.78, p.z); g.add(lb);
@@ -465,8 +467,77 @@
   /* ---------- contact: particle knot ---------- */
   S.knot = function (o) {
     var C = PF.col, g = new THREE.Group(); o.add(g);
-    g.add(new THREE.Points(new THREE.TorusKnotGeometry(1.6, 0.34, 260, 22, 2, 3), new THREE.PointsMaterial({ color: C.blue, size: 0.04, transparent: true, opacity: 0.9 })));
+    g.add(new THREE.Points(new THREE.TorusKnotGeometry(1.6, 0.34, 260, 22, 2, 3), new THREE.PointsMaterial({ color: C.blue, size: 0.06, transparent: true, opacity: 0.9, map: PF.dotTex(), alphaTest: 0.02, blending: THREE.AdditiveBlending, depthWrite: false })));
     g.add(new THREE.Mesh(new THREE.TorusKnotGeometry(1.6, 0.12, 200, 10, 2, 3), basic(C.amber, 0.35, { wireframe: true })));
     return function (t) { g.rotation.y = t * 0.25 + PF.state.mx * 0.3; g.rotation.x = t * 0.12 - PF.state.my * 0.2; };
   };
+
+  /* ---------- Notes: an endless feed of post cards ---------- */
+  S.feed = function (o, opt, X) {
+    var C = PF.col, posts = (X.content && X.content.posts) || [], MD = window.PFMD;
+    var N = Math.max(4, Math.min(5, posts.length + 2)), cards = [], g = new THREE.Group(); g.scale.setScalar(0.98); g.position.set(0.25, 0.1, 0); o.add(g);
+    function wrap(c, text, x, y, maxW, lh, maxLines) {
+      var words = String(text).split(' '), line = '', n = 0;
+      for (var i = 0; i < words.length; i++) {
+        var t = line ? line + ' ' + words[i] : words[i];
+        if (c.measureText(t).width > maxW && line) { c.fillText(line, x, y); y += lh; line = words[i]; if (++n >= maxLines - 1) { line = words.slice(i).join(' '); break; } } else line = t;
+      }
+      var fin = line; while (c.measureText(fin).width > maxW && fin.length > 3) fin = fin.slice(0, -2);
+      if (fin !== line) fin += '…';
+      c.fillText(fin, x, y);
+    }
+    function painter(p, k) {
+      return function (c, W, H) {
+        var live = !!p;
+        c.clearRect(0, 0, W, H);
+        c.fillStyle = 'rgba(14,20,32,.94)'; c.fillRect(0, 0, W, H);
+        c.fillStyle = live ? PF.theme.amber : 'rgba(255,255,255,.18)'; c.fillRect(0, 0, 10, H);
+        c.strokeStyle = 'rgba(255,255,255,.14)'; c.lineWidth = 3; c.strokeRect(1.5, 1.5, W - 3, H - 3);
+        c.textBaseline = 'alphabetic';
+        c.font = '500 26px "JetBrains Mono",ui-monospace,monospace'; c.fillStyle = live ? PF.theme.blue : 'rgba(255,255,255,.35)';
+        c.fillText(live ? MD.fmtDate(p.date).toUpperCase() + '  ·  ' + MD.minutes(p) + ' MIN' : 'NEXT POST', 44, 62);
+        c.font = '700 44px "Bricolage Grotesque",system-ui,sans-serif'; c.fillStyle = live ? '#ffffff' : 'rgba(255,255,255,.4)';
+        wrap(c, live ? p.title : 'Coming next month', 44, 128, W - 90, 52, 2);
+        c.font = '400 27px "Instrument Sans",system-ui,sans-serif'; c.fillStyle = live ? 'rgba(232,236,243,.75)' : 'rgba(255,255,255,.25)';
+        wrap(c, live ? (p.summary || '') : 'A monthly note on what I shipped and learned.', 44, 236, W - 90, 36, 2);
+        if (live && p.tags) {
+          var x = 44; c.font = '500 22px "JetBrains Mono",ui-monospace,monospace';
+          p.tags.slice(0, 3).forEach(function (t) { var w = c.measureText(t).width + 26; c.strokeStyle = 'rgba(255,255,255,.3)'; c.lineWidth = 2; c.strokeRect(x, H - 62, w, 36); c.fillStyle = 'rgba(232,236,243,.8)'; c.fillText(t, x + 13, H - 37); x += w + 10; });
+        }
+        if (live && k === 0) { c.fillStyle = PF.theme.amber; c.fillRect(W - 116, 26, 84, 34); c.fillStyle = '#080c13'; c.font = '700 20px "JetBrains Mono",monospace'; c.fillText('LATEST', W - 107, 50); }
+      };
+    }
+    for (var k = 0; k < N; k++) {
+      var p = posts[k % Math.max(posts.length, 1)], live = posts.length && k < Math.max(posts.length, 1) && k < N;
+      var cd = PF.card(2.9, 1.65, 0.1, 760, painter(k < posts.length ? posts[k] : null, k));
+      g.add(cd.mesh); cards.push(cd.mesh);
+    }
+    /* feed rail: a glowing line with a node beside every card */
+    var rail = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 11, 6), basic(C.blue, 0.5));
+    rail.position.x = -1.85; g.add(rail);
+    var nodes = [];
+    for (k = 0; k < N; k++) { var nd = new THREE.Mesh(new THREE.SphereGeometry(0.07, 14, 14), basic(C.amber)); nd.position.x = -1.85; g.add(nd); nodes.push(nd); }
+    /* RSS badge: dot plus two arcs that pulse outward */
+    var rss = new THREE.Group(); rss.position.set(1.9, -2.25, 0.3); g.add(rss);
+    rss.add(new THREE.Mesh(new THREE.SphereGeometry(0.09, 16, 16), basic(C.amber)));
+    var arcs = [0.28, 0.5, 0.72].map(function (r) {
+      var a = new THREE.Mesh(new THREE.TorusGeometry(r, 0.025, 8, 28, Math.PI / 2), basic(C.amber, 0.9));
+      a.position.set(-0.04, -0.04, 0); rss.add(a); return a;
+    });
+    var SP = 1.95, LOOP = N * SP;
+    return function (t) {
+      var off = Math.sin(t * 0.4) * 0.55;   /* the feed bobs gently so the newest post stays in view */
+      cards.forEach(function (m, k) {
+        var y = (((k * SP - off + LOOP / 2) % LOOP) + LOOP) % LOOP - LOOP / 2;
+        var d = Math.abs(y), f = Math.max(0, 1 - d / 3.2);
+        m.position.set(0.12 + Math.sin(y * 0.5) * 0.12, y, f * 0.8 - 0.4);
+        m.rotation.y = -0.28 + PF.state.mx * 0.15; m.rotation.x = y * 0.03;
+        m.scale.setScalar(0.82 + f * 0.2);
+        m.material.opacity = Math.max(0, Math.min(1, 1.35 - d / 2.6));
+        nodes[k].position.y = y; nodes[k].scale.setScalar(0.6 + f * 0.9);
+      });
+      arcs.forEach(function (a, k) { a.material.opacity = 0.35 + 0.6 * Math.max(0, Math.sin(t * 2.4 - k * 0.9)); });
+    };
+  };
+
 })();

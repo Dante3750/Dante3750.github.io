@@ -45,3 +45,8 @@ Free, privacy-friendly options: Cloudflare Web Analytics, GoatCounter. Paid: Pla
 ## 7. Optional: a contact form
 
 The page uses an email button, which is fine. If you want a form, services such as Formspree or Web3Forms give you a form endpoint on a free tier. Watch for spam and add their anti-spam option.
+
+
+## After you buy a domain
+
+Set `profile.siteUrl` in `js/content.js` to your address (for example `https://himanshuupadhyay.dev`). The deploy step then writes the correct links into `feed.xml` and `sitemap.xml`. Submit `sitemap.xml` in Google Search Console.

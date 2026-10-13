@@ -95,3 +95,18 @@ Then use `scene: 'rocket'` in a section. Colours are in `PF.col` (numbers for 3D
 ## Ask Claude to do it
 
 Paste your new resume or job details and ask: "Update `content.js` with this: add the new job to the timeline and the Android section." Then paste the new file into your repository.
+
+
+## Post on the blog (monthly updates)
+
+All posts live in `js/posts.js`. To publish one:
+
+1. Open `js/posts.js` (on GitHub press `.` to edit in the browser).
+2. Copy the template from the comment at the top, paste it as the first item in `window.POSTS`, and fill in `slug`, `date`, `title`, `summary`, `tags` and `body`.
+3. Commit. After about a minute the post is on `blog.html`, in the Notes section of the home page (latest three) and in `feed.xml`.
+
+Write the `body` in simple Markdown: `## Heading`, `**bold**`, `[link](https://...)`, `- bullets`, `> quote`, images with `![caption](url)` and code blocks with three backticks. Put images in an `images/` folder and use `images/photo.png` as the URL.
+
+Set `draft: true` on a post to keep it hidden while you write it. Change `limit` on the `notes` section in `js/content.js` to show more or fewer posts on the home page. Delete the whole `notes` section to hide the block from the home page; the blog page keeps working.
+
+Idea for a monthly routine: on the last day of the month, write five lines (shipped, broke, learned, next, a link) and post it. It takes ten minutes and keeps your profile fresh for search and for recruiters.

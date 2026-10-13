@@ -10,7 +10,8 @@
   var S = PF.state;
 
   /* sections of these types disappear until their list in content.js has entries */
-  var NEEDS = { services: 'services', projects: 'projects', testimonials: 'testimonials' };
+  D.posts = window.PFMD ? window.PFMD.posts() : [];
+  var NEEDS = { services: 'services', projects: 'projects', testimonials: 'testimonials', posts: 'posts' };
   D.sections = D.sections.filter(function (s) { var k = NEEDS[s.type]; return !(k && !(D[k] && D[k].length)); });
 
   var LINK_LABELS = { linkedin: 'LinkedIn', github: 'GitHub', x: 'X', medium: 'Medium', youtube: 'YouTube', stackoverflow: 'Stack Overflow', devto: 'DEV', gitlab: 'GitLab', upwork: 'Upwork', toptal: 'Toptal', fiverr: 'Fiverr', behance: 'Behance' };
@@ -74,7 +75,7 @@
 
   function buildCopy(s) {
     var P = D.profile || {};
-    var wide = s.type === 'timeline' || s.type === 'services' || s.type === 'projects' || s.type === 'testimonials';
+    var wide = s.type === 'timeline' || s.type === 'posts' || s.type === 'services' || s.type === 'projects' || s.type === 'testimonials';
     var c = el('div', 'copy' + (wide ? ' wide' : ''));
 
     if (s.type === 'hero' && P.availability && P.availability.show) {
@@ -121,6 +122,17 @@
       var sk = el('dl', 'skills');
       (D.skills || []).forEach(function (g) { sk.appendChild(el('dt', null, g.group)); sk.appendChild(el('dd', null, g.items)); });
       c.appendChild(sk);
+    }
+    if (s.type === 'posts') {
+      var pl = el('ul', 'cards feedlist');
+      D.posts.slice(0, s.limit || 3).forEach(function (p) {
+        var li = el('li');
+        li.appendChild(el('p', 'mono', window.PFMD.fmtDate(p.date) + ' · ' + window.PFMD.minutes(p) + ' min read'));
+        var h = el('h3'), a = el('a', null, p.title); a.href = 'blog.html#/' + p.slug; h.appendChild(a); li.appendChild(h);
+        if (p.summary) li.appendChild(el('p', null, p.summary));
+        pl.appendChild(li);
+      });
+      c.appendChild(pl);
     }
     if (s.type === 'services') c.appendChild(cardList(D.services));
     if (s.type === 'projects') c.appendChild(cardList(D.projects));
@@ -263,6 +275,20 @@
     scene.fog = new THREE.FogExp2(INK, 0.04);   /* thick enough that the next station stays hidden until you arrive */
     var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 400);
     var X = { camera: camera, content: D };
+    var narrow0 = window.innerWidth < 820;
+
+    /* studio environment: a few soft light panels, baked once, so metal and glass have something to reflect */
+    try {
+      var envScene = new THREE.Scene();
+      envScene.add(new THREE.Mesh(new THREE.SphereGeometry(50, 24, 16), new THREE.MeshBasicMaterial({ color: 0x06080d, side: THREE.BackSide })));
+      [[0x6f9bff, 14, 3, 0, 18, 8, 0], [0xffb86a, 4, 10, 22, 2, -4, 0.9], [0xdfe8ff, 18, 2, -6, 24, 4, 0], [0x4d8dff, 3, 12, -24, 0, 6, -0.7]].forEach(function (L) {
+        var m = new THREE.Mesh(new THREE.PlaneGeometry(L[1], L[2]), new THREE.MeshBasicMaterial({ color: new THREE.Color(L[0]).multiplyScalar(3.2), side: THREE.DoubleSide }));
+        m.position.set(L[3], L[4], L[5]); m.lookAt(0, 0, 0); m.rotation.z += L[6]; envScene.add(m);
+      });
+      var pm = new THREE.PMREMGenerator(renderer);
+      scene.environment = pm.fromScene(envScene, 0.04).texture;
+      pm.dispose();
+    } catch (err) { /* no environment: materials fall back to the lights alone */ }
 
     /* a fixed set of lights (changing the light count would recompile shaders mid-scroll);
        the two point lights follow the camera from station to station */
@@ -278,7 +304,23 @@
       st.push(g); obj.push(o);
       var fn = PF.scenes[s.scene] || PF.scenes.knot, u;
       try { u = fn(o, s.sceneOptions || {}, X); } catch (err) { if (window.console) console.warn('Scene "' + s.scene + '" failed for section "' + s.id + '"', err); }
-      upd.push(typeof u === 'function' ? u : function () {});
+      var base = typeof u === 'function' ? u : function () {};
+      /* every station gets a colour aura behind it, a ring of drifting dust and a glowing floor ring */
+      var tint = i % 2 ? PF.col.amber : PF.col.blue;
+      var aura = PF.glow(tint, 11, 0.3); aura.position.set(0, 0, -3); o.add(aura);
+      var aura2 = PF.glow(i % 2 ? PF.col.blue : PF.col.amber, 6, 0.12); aura2.position.set(1.5, -1, -2); o.add(aura2);
+      var DN = narrow0 ? 70 : 160, dp = new Float32Array(DN * 3), dph = [];
+      for (var d = 0; d < DN; d++) { var rr = 2.6 + Math.random() * 3.6, th = Math.random() * 6.283; dp[d * 3] = Math.cos(th) * rr; dp[d * 3 + 1] = (Math.random() - 0.5) * 6; dp[d * 3 + 2] = Math.sin(th) * rr - 1.5; dph.push(Math.random() * 6.283); }
+      var dg = new THREE.BufferGeometry(); dg.setAttribute('position', new THREE.BufferAttribute(dp, 3));
+      var dust = new THREE.Points(dg, new THREE.PointsMaterial({ color: tint, size: 0.07, transparent: true, opacity: 0.7, map: PF.dotTex(), blending: THREE.AdditiveBlending, depthWrite: false }));
+      dust.frustumCulled = false; o.add(dust);
+      var floor = new THREE.Group(); floor.position.y = -2.3; floor.rotation.x = -Math.PI / 2; o.add(floor);
+      [1.6, 2.6, 3.8].forEach(function (r, k) { floor.add(new THREE.Mesh(new THREE.RingGeometry(r, r + 0.012, 96), new THREE.MeshBasicMaterial({ color: tint, transparent: true, opacity: 0.32 - k * 0.08, side: THREE.DoubleSide, depthWrite: false, blending: THREE.AdditiveBlending }))); });
+      upd.push(function (t, dt, redraw) {
+        dust.rotation.y = t * 0.05; dust.position.y = Math.sin(t * 0.3) * 0.15;
+        floor.rotation.z = t * 0.08;
+        base(t, dt, redraw);
+      });
     });
 
     /* star field */
@@ -287,7 +329,7 @@
       sp[q * 3] = (Math.random() - 0.5) * 80; sp[q * 3 + 1] = (Math.random() - 0.5) * 44; sp[q * 3 + 2] = 14 - Math.random() * (N * STEP + 40);
     }
     var sg = new THREE.BufferGeometry(); sg.setAttribute('position', new THREE.BufferAttribute(sp, 3));
-    scene.add(new THREE.Points(sg, new THREE.PointsMaterial({ color: 0x9db4e0, size: 0.07, transparent: true, opacity: 0.7, fog: false })));
+    scene.add(new THREE.Points(sg, new THREE.PointsMaterial({ color: 0x7f95c4, size: 0.16, transparent: true, opacity: 0.8, fog: false, map: PF.dotTex(), alphaTest: 0.02, depthWrite: false })));
 
     /* camera path through every station */
     var camPts = [], tgtPts = [];
@@ -332,6 +374,7 @@
       camDist = narrow ? 8.4 : 6.9;
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, narrow ? 1.5 : 1.75));
       renderer.setSize(w, h, false);
+      if (composer) { composer.setPixelRatio(renderer.getPixelRatio()); composer.setSize(w, h); bloom.setSize(w / 2, h / 2); }
       camera.aspect = w / h; camera.fov = w / h < 1 ? 58 : 45; camera.updateProjectionMatrix();
       layout(narrow); computeKnots();
     }
@@ -340,6 +383,34 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { computeKnots(); PF.repaint.forEach(function (p) { p(); }); });
     window.addEventListener('pointermove', function (e) { S.px = e.clientX / window.innerWidth * 2 - 1; S.py = e.clientY / window.innerHeight * 2 - 1; }, { passive: true });
     resize();
+
+    /* post-processing: bloom on bright things, then a cinematic grade (vignette, light chromatic edge, film grain) */
+    var composer = null, bloom = null, grade = null, useFX = !!(THREE.EffectComposer && THREE.RenderPass && THREE.UnrealBloomPass && THREE.ShaderPass && !RM);
+    if (useFX) {
+      try {
+        var w0 = window.innerWidth, h0 = window.innerHeight, rt = null;
+        if (!narrow0 && renderer.capabilities.isWebGL2 && THREE.WebGLMultisampleRenderTarget) {
+          rt = new THREE.WebGLMultisampleRenderTarget(w0, h0, { format: THREE.RGBAFormat }); rt.samples = 4;
+        }
+        composer = new THREE.EffectComposer(renderer, rt || undefined);
+        composer.addPass(new THREE.RenderPass(scene, camera));
+        bloom = new THREE.UnrealBloomPass(new THREE.Vector2(w0 / 2, h0 / 2), narrow0 ? 0.45 : 0.62, 0.7, 0.66);
+        composer.addPass(bloom);
+        grade = new THREE.ShaderPass({
+          uniforms: { tDiffuse: { value: null }, time: { value: 0 }, amt: { value: 1 } },
+          vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }',
+          fragmentShader: 'uniform sampler2D tDiffuse; uniform float time; uniform float amt; varying vec2 vUv;' +
+            'float hash(vec2 p){ return fract(sin(dot(p, vec2(12.9898,78.233))) * 43758.5453); }' +
+            'void main(){ vec2 c = vUv - 0.5; float r2 = dot(c,c);' +
+            'vec2 off = c * r2 * 0.012 * amt;' +
+            'vec3 col = vec3(texture2D(tDiffuse, vUv + off).r, texture2D(tDiffuse, vUv).g, texture2D(tDiffuse, vUv - off).b);' +
+            'col *= 1.0 - smoothstep(0.18, 0.62, r2) * 0.55 * amt;' +
+            'col += (hash(vUv * 900.0 + time) - 0.5) * 0.028 * amt;' +
+            'gl_FragColor = vec4(col, 1.0); }'
+        });
+        composer.addPass(grade);
+      } catch (err) { composer = null; useFX = false; if (window.console) console.warn('post-processing off', err); }
+    }
 
     /* compile every material once so scenes do not stutter the first time they appear */
     try { renderer.compile(scene, camera); } catch (err) { /* ignore */ }
@@ -359,6 +430,7 @@
         camera.lookAt(tgtCurve.getPoint(u));
       } else { camera.position.set(0, 0, 8.4); camera.lookAt(0, 0, 0); }
       camera.position.x += S.mx * 0.45; camera.position.y -= S.my * 0.25; camera.position.z += camDist - 8.4;
+      camera.rotateZ(Math.sin(clock * 0.25) * 0.012 - S.mx * 0.02);
       var near = Math.max(0, Math.min(N - 1, Math.round(tCur)));
       keyLight.position.set(-2, 3, -near * STEP + 5); warmLight.position.set(4, -2, -near * STEP + 4);
       acc += dt; var redraw = false; if (acc > 1 / 30) { acc = 0; redraw = true; }
@@ -367,8 +439,17 @@
         st[i2].visible = vis;
         if (vis) upd[i2](clock, dt, redraw);
       }
-      renderer.render(scene, camera);
+      if (composer && useFX) {
+        grade.uniforms.time.value = clock % 100;
+        composer.render(dt);
+        /* slow device: drop the effects instead of dropping frames */
+        slow = dt > 0.034 ? slow + 1 : Math.max(0, slow - 2);
+        if (slow > 100) { useFX = false; renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.25)); renderer.setSize(window.innerWidth, window.innerHeight, false); }
+      } else {
+        renderer.render(scene, camera);
+      }
     }
+    var slow = 0;
     requestAnimationFrame(frame);
   }
 

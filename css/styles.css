@@ -117,3 +117,5 @@ footer{position:relative;z-index:1;padding:1.5rem clamp(16px,5vw,72px) 2rem;font
   .skills dd{margin-bottom:.4rem}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn,.tl li,.dots a::before{transition:none}.pill .dot{animation:none}}
+.cards h3 a{text-decoration:none}
+.cards h3 a:hover{color:var(--amber)}

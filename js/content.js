@@ -23,12 +23,13 @@
      sphere    skills sphere
      toolbox   rotating cube lattice (used for services)
      knot      particle knot
+     feed      floating post cards (used for the Notes section)
 
    Section fields (all optional except id and scene):
      id, nav (label in the top bar), side ('l' or 'r' for the text column),
      eyebrow, title, lede, body[], stats[{value,label}], more[], notes[],
      tags[], cta[{label,href,primary}], mono, sceneOptions{}
-   Special types:  type:'hero' | 'timeline' | 'skills' | 'services' | 'projects' | 'testimonials' | 'contact'
+   Special types:  type:'hero' | 'timeline' | 'skills' | 'services' | 'projects' | 'testimonials' | 'posts' | 'contact'
    (services, projects and testimonials read the lists of the same name below and
    stay hidden while their list is empty)
    ========================================================================== */
@@ -47,7 +48,9 @@ window.PORTFOLIO = {
     role: 'Senior Android Engineer',
     location: 'Bengaluru, India',
     description: 'Senior Android Engineer in Bengaluru. Kotlin, Jetpack Compose, WebRTC and BLE. Previously at Meta and Sony India.',
-    email: 'uhimanshuu@gmail.com',
+    /* Your site address once you have a domain, e.g. 'https://himanshuupadhyay.dev'. Used for the RSS feed and sitemap. Leave empty on GitHub Pages: the workflow works it out. */
+  siteUrl: '',
+  email: 'uhimanshuu@gmail.com',
     emailSubject: 'Android project enquiry',   /* pre-filled subject of the "Email me" button */
     phone: '',                 /* leave empty to keep your number off the public page */
     /* Paste full URLs. Empty ones are hidden. You can add more keys:
@@ -172,6 +175,14 @@ window.PORTFOLIO = {
       id: 'skills', type: 'skills', nav: 'Skills', scene: 'sphere',
       eyebrow: 'Toolbox',
       title: 'What I work with'
+    },
+    /* Latest posts from js/posts.js. Hidden until you have at least one published post. */
+    {
+      id: 'notes', type: 'posts', nav: 'Notes', scene: 'feed', limit: 3,
+      eyebrow: 'Notes',
+      title: 'What I am building, month by month',
+      body: ['A short log each month: what shipped, what broke, what I learned.'],
+      cta: [{ label: 'All posts', href: 'blog.html', primary: true }, { label: 'RSS', href: 'feed.xml' }]
     },
     {
       id: 'hire', type: 'services', nav: 'Hire me', scene: 'toolbox',

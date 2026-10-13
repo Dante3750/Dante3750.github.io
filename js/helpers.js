@@ -67,6 +67,27 @@
     return { mesh: mesh, redraw: redraw };
   };
 
+  /* soft round dot, shared by every particle system (square points look cheap) */
+  var _dot = null;
+  PF.dotTex = function () {
+    if (_dot) return _dot;
+    var cv = document.createElement('canvas'); cv.width = cv.height = 64;
+    var c = cv.getContext('2d'), g = c.createRadialGradient(32, 32, 0, 32, 32, 32);
+    g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(0.35, 'rgba(255,255,255,.75)'); g.addColorStop(1, 'rgba(255,255,255,0)');
+    c.fillStyle = g; c.fillRect(0, 0, 64, 64);
+    return (_dot = new THREE.CanvasTexture(cv));
+  };
+  /* big soft glow, drawn additively behind a scene */
+  PF.glow = function (color, size, opacity) {
+    var cv = document.createElement('canvas'); cv.width = cv.height = 128;
+    var c = cv.getContext('2d'), g = c.createRadialGradient(64, 64, 0, 64, 64, 64);
+    g.addColorStop(0, 'rgba(255,255,255,.9)'); g.addColorStop(0.4, 'rgba(255,255,255,.28)'); g.addColorStop(1, 'rgba(255,255,255,0)');
+    c.fillStyle = g; c.fillRect(0, 0, 128, 128);
+    var sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(cv), color: color, transparent: true, opacity: opacity, depthWrite: false, blending: THREE.AdditiveBlending, fog: false }));
+    sp.scale.set(size, size, 1);
+    return sp;
+  };
+
   PF.makeLabel = function (text, color, fs) {
     var cv = document.createElement('canvas'); cv.width = 400; cv.height = 72;
     var c = cv.getContext('2d'), tex = new THREE.CanvasTexture(cv);
@@ -87,7 +108,7 @@
     var bodyGeo = new THREE.ExtrudeGeometry(PF.rrShape(w, h, r), { depth: d, bevelEnabled: true, bevelThickness: 0.025, bevelSize: 0.025, bevelSegments: 4, curveSegments: 14 });
     bodyGeo.translate(0, 0, -d / 2);
     var group = new THREE.Group();
-    group.add(new THREE.Mesh(bodyGeo, new THREE.MeshStandardMaterial({ color: 0x182130, metalness: 0.8, roughness: 0.28 })));
+    group.add(new THREE.Mesh(bodyGeo, new THREE.MeshPhysicalMaterial({ color: 0x33425f, metalness: 0.85, roughness: 0.22, clearcoat: 0.8, clearcoatRoughness: 0.2, envMapIntensity: 1.8 })));
     var sw = w - 0.09, sh = h - 0.09;
     var ct = PF.canvasTex(420, Math.round(420 * sh / sw));
     var screen = new THREE.Mesh(PF.rrPlane(sw, sh, r - 0.04), new THREE.MeshBasicMaterial({ map: ct.tex, toneMapped: false }));

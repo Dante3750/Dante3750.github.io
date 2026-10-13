@@ -33,6 +33,7 @@ It needs internet access for three.js and the Google Fonts.
 | `timeline` | The jobs list. It also drives the nodes on the 3D helix. |
 | `skills`, `sphere` | The skills list and the words in the 3D sphere |
 | `services` | The "Work with me" cards |
+| `js/posts.js` | Your blog posts (Markdown). Shown on `blog.html`, in Notes and in the RSS feed |
 | `projects`, `testimonials` | Empty at first. Each section appears as soon as you add an entry. |
 
 ### Scenes
@@ -51,6 +52,7 @@ It needs internet access for three.js and the Google Fonts.
 | `sphere` | Skills sphere |
 | `toolbox` | Rotating cube lattice |
 | `knot` | Particle knot |
+| `feed` | Floating post cards for the Notes section |
 
 ## Before you publish
 
@@ -70,6 +72,8 @@ See [docs/HOSTING.md](docs/HOSTING.md) for a custom domain.
 
 ## Other features
 
+- **Blog and RSS:** `blog.html` lists and shows posts. The deploy step builds a static page for each post, `feed.xml` and `sitemap.xml`.
+- **Cinematic 3D:** bloom, a studio reflection map, a light film grade and drifting dust. It switches itself off on slow devices.
 - **Lite mode:** the footer link turns the 3D off for slow machines. It also switches on for visitors who ask their browser to save data.
 - **No WebGL:** the text stays fully readable.
 - **Reduced motion:** the animation stops for visitors who ask for it.
@@ -81,6 +85,8 @@ See [docs/HOSTING.md](docs/HOSTING.md) for a custom domain.
 index.html             page shell, meta tags
 css/styles.css         layout and typography
 js/content.js          all your content (edit this)
+js/posts.js            your blog posts (edit this)
+blog.html              blog list and post pages
 js/helpers.js          shared 3D helpers and phone-screen painters
 js/scenes.js           the 3D scenes
 js/app.js              renders the page and flies the camera

@@ -27,6 +27,8 @@ jobs:
           node-version: 20
       # Writes your content into index.html so search engines can read it. Only changes the deployed copy.
       - name: Prerender content for search engines
+        env:
+          SITE_URL: ${{ vars.SITE_URL || format('https://{0}.github.io/{1}', github.repository_owner, github.event.repository.name) }}
         run: |
           npm install --no-save --no-package-lock jsdom
           node tools/prerender.js
