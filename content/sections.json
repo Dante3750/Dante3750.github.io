@@ -1,0 +1,251 @@
+{
+  "sections": [
+    {
+      "id": "top",
+      "type": "hero",
+      "scene": "phone",
+      "side": "l",
+      "eyebrow": "Android engineer · Bengaluru, India",
+      "lede": "I build Android apps that talk to hardware, stream in real time and keep working on a bad connection.",
+      "tags": [
+        "Kotlin",
+        "Jetpack Compose",
+        "WebRTC",
+        "BLE"
+      ],
+      "cta": [
+        {
+          "label": "Work with me",
+          "href": "#hire",
+          "primary": true
+        },
+        {
+          "label": "See the work",
+          "href": "#meta"
+        }
+      ],
+      "mono": "7+ years · led a team of 5 · Meta, Sony India",
+      "sceneOptions": "{\n  \"title\": \"Provisioning\"\n}"
+    },
+    {
+      "id": "meta",
+      "nav": "Work",
+      "scene": "headset",
+      "eyebrow": "2024 – 2025 · Accenture, for Meta",
+      "title": "Setting up AR/VR devices from a phone",
+      "body": [
+        "I led Android work on the tooling that provisions and configures AR/VR devices over BLE, Bluetooth and Wi-Fi Direct, written in Kotlin and Jetpack Compose."
+      ],
+      "stats": [
+        {
+          "value": "50–100",
+          "label": "device models"
+        },
+        {
+          "value": "5K–10K",
+          "label": "internal users"
+        },
+        {
+          "value": "100+",
+          "label": "defects fixed per release"
+        }
+      ],
+      "more": [
+        "I root-caused connectivity bugs across 4 to 5 regions with ADB, logcat and system logs, gated each release on Espresso tests through GitHub Actions and GitLab CI, and ran code reviews for a team of 5."
+      ],
+      "notes": [
+        "In parallel I delivered the Android module for the Metrolinx travel project with Compose and WorkManager."
+      ],
+      "sceneOptions": "{\n  \"devices\": 64,\n  \"panels\": [\n    [\n      \"BLE pairing\",\n      [\n        \"scan\",\n        \"connect\",\n        \"configure\"\n      ]\n    ],\n    [\n      \"Wi-Fi Direct\",\n      [\n        \"group\",\n        \"handoff\",\n        \"verify\"\n      ]\n    ]\n  ]\n}"
+    },
+    {
+      "id": "sony",
+      "scene": "sync",
+      "eyebrow": "2021 – 2024 · Wipro, for Sony India",
+      "title": "Watching together, in sync",
+      "body": [
+        "I shipped cross-device watch-party sync for a live-streaming product and built WebRTC audio and video communication on top of backend REST APIs."
+      ],
+      "stats": [
+        {
+          "value": "<150 ms",
+          "label": "sync drift across devices"
+        },
+        {
+          "value": "12% → 4%",
+          "label": "crash rate after Crashlytics fixes and TDD"
+        }
+      ],
+      "more": [
+        "Offline-first data with Room and WorkManager, key screens moved to Jetpack Compose, TalkBack and contrast fixes, R8 shrinking, and ownership of Play Store releases."
+      ]
+    },
+    {
+      "id": "web3",
+      "scene": "chain",
+      "eyebrow": "2021 – 2024 · Wipro, for Sony India",
+      "title": "Digital identity on the blockchain",
+      "body": [
+        "On the Mocopi NFT project I integrated blockchain-based digital identity features on mobile devices."
+      ],
+      "more": [
+        "Blockchain also ran through my teaching, where I covered the fundamentals using what I learned in production. I hold the Certified Web3 Associate and Certified Hyperledger certificates."
+      ],
+      "tags": [
+        "Ethereum",
+        "Hyperledger",
+        "NFT"
+      ],
+      "sceneOptions": "{\n  \"labels\": [\n    \"Ethereum\",\n    \"Hyperledger\",\n    \"NFT\",\n    \"Identity\",\n    \"Web3\",\n    \"Mocopi\"\n  ]\n}"
+    },
+    {
+      "id": "fulcrum",
+      "scene": "agentapp",
+      "eyebrow": "2020 – 2021 · Fulcrum Digital, Pune",
+      "title": "An insurance app for field agents",
+      "body": [
+        "I led end-to-end Android development of the Al Hilal Mobile Agent App, covering medical and life insurance workflows."
+      ],
+      "stats": [
+        {
+          "value": "500+",
+          "label": "field agents using the app"
+        }
+      ],
+      "more": [
+        "I built the Kotlin features for real-time data management in online policy processing and owned the API and web-service integration with the backend, which improved data-sync reliability."
+      ],
+      "sceneOptions": "{\n  \"agents\": 500\n}"
+    },
+    {
+      "id": "trainer",
+      "scene": "globe",
+      "eyebrow": "2020 · Freelance",
+      "title": "Teaching Android to learners worldwide",
+      "body": [
+        "I ran live Kotlin and Android training and designed the exercises and learning material for hands-on practice."
+      ],
+      "stats": [
+        {
+          "value": "500–1,000",
+          "label": "learners"
+        },
+        {
+          "value": "4–5",
+          "label": "countries"
+        }
+      ],
+      "sceneOptions": "{\n  \"markers\": [\n    [\n      12.97,\n      77.59\n    ],\n    [\n      51.5,\n      -0.12\n    ],\n    [\n      25.2,\n      55.27\n    ],\n    [\n      40.7,\n      -74\n    ],\n    [\n      -33.87,\n      151.2\n    ]\n  ]\n}"
+    },
+    {
+      "id": "netconnect",
+      "scene": "apps",
+      "eyebrow": "2018 – 2020 · NetConnect, Bengaluru",
+      "title": "Internal apps people used every day",
+      "body": [
+        "I built and maintained 4+ in-house Android apps for attendance, asset tracking, billing and internal operations."
+      ],
+      "stats": [
+        {
+          "value": "4+",
+          "label": "in-house apps"
+        },
+        {
+          "value": "500+",
+          "label": "employees using them"
+        }
+      ],
+      "more": [
+        "I integrated REST APIs, fixed production crashes to improve stability, and shipped new features and UX improvements with backend and product stakeholders."
+      ],
+      "sceneOptions": "{\n  \"apps\": [\n    [\n      \"Attendance\",\n      \"calendar\"\n    ],\n    [\n      \"Asset tracking\",\n      \"barcode\"\n    ],\n    [\n      \"Billing\",\n      \"receipt\"\n    ],\n    [\n      \"Operations\",\n      \"gear\"\n    ]\n  ]\n}"
+    },
+    {
+      "id": "anytime",
+      "scene": "book",
+      "eyebrow": "2017 – 2018 · Anytime Softcare, Noida",
+      "title": "Where it started: Inkpot",
+      "body": [
+        "I built Inkpot, a native Android educational content delivery app, end to end from scratch, and implemented the core mobile features and design patterns for in-house Android products."
+      ]
+    },
+    {
+      "id": "career",
+      "type": "timeline",
+      "nav": "Career",
+      "scene": "helix",
+      "eyebrow": "Career",
+      "title": "From Inkpot to AR/VR",
+      "mono": "B.Tech Computer Science, Dr. APJ Abdul Kalam Technical University, 2016 · Certified Web3 Associate · Certified Hyperledger"
+    },
+    {
+      "id": "skills",
+      "type": "skills",
+      "nav": "Skills",
+      "scene": "sphere",
+      "eyebrow": "Toolbox",
+      "title": "What I work with"
+    },
+    {
+      "id": "notes",
+      "type": "posts",
+      "nav": "Notes",
+      "scene": "feed",
+      "limit": 3,
+      "eyebrow": "Notes",
+      "title": "What I am building, month by month",
+      "body": [
+        "A short log each month: what shipped, what broke, what I learned."
+      ],
+      "cta": [
+        {
+          "label": "All posts",
+          "href": "blog.html",
+          "primary": true
+        },
+        {
+          "label": "RSS",
+          "href": "feed.xml"
+        }
+      ]
+    },
+    {
+      "id": "hire",
+      "type": "services",
+      "nav": "Hire me",
+      "scene": "toolbox",
+      "eyebrow": "Work with me",
+      "title": "Freelance, part-time or full-time",
+      "body": [
+        "I take on Android projects alongside or instead of a day job. Tell me what you need shipped and I will tell you how I would approach it."
+      ]
+    },
+    {
+      "id": "projects",
+      "type": "projects",
+      "nav": "Projects",
+      "scene": "phone",
+      "eyebrow": "Selected projects",
+      "title": "Things you can open and try",
+      "sceneOptions": "{\n  \"title\": \"Projects\"\n}"
+    },
+    {
+      "id": "kind-words",
+      "type": "testimonials",
+      "scene": "knot",
+      "eyebrow": "Kind words",
+      "title": "What people say"
+    },
+    {
+      "id": "contact",
+      "type": "contact",
+      "nav": "Contact",
+      "scene": "knot",
+      "eyebrow": "Contact",
+      "title": "Let's build something that ships",
+      "body": [
+        "Talk to me about Android, real-time streaming or device connectivity."
+      ]
+    }
+  ]
+}

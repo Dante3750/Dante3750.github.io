@@ -1,0 +1,184 @@
+# Dashboard settings (Sveltia CMS). Open  /admin/  on your site, click "Sign in with token", paste a GitHub token once.
+# Docs: docs/DASHBOARD.md
+backend:
+  name: github
+  repo: YOUR-GITHUB-USERNAME/YOUR-REPO   # <- change this to your repository, e.g. himanshu/portfolio
+  branch: main
+
+media_folder: images/uploads
+public_folder: images/uploads
+site_url: https://example.com
+display_url: https://example.com
+locale: en
+
+collections:
+  - name: posts
+    label: Blog posts
+    label_singular: Blog post
+    folder: content/posts
+    extension: md
+    format: yaml-frontmatter
+    create: true
+    slug: "{{slug}}"
+    summary: "{{date}} · {{title}}"
+    sortable_fields: [date, title]
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: date, label: Date, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+      - { name: summary, label: Summary, widget: text, hint: "One or two sentences. Shown in lists and link previews." }
+      - { name: tags, label: Tags, widget: list, default: ["Monthly update"] }
+      - { name: draft, label: "Draft (hide until ready)", widget: boolean, default: false }
+      - { name: body, label: Article, widget: markdown }
+
+  - name: site
+    label: Site content
+    files:
+      - name: profile
+        label: Profile, links and colours
+        file: content/profile.json
+        fields:
+          - name: theme
+            label: Colours
+            widget: object
+            fields:
+              - { name: ink, label: Background, widget: color }
+              - { name: text, label: Text, widget: color }
+              - { name: mute, label: Muted text, widget: color }
+              - { name: blue, label: Accent blue, widget: color }
+              - { name: amber, label: Accent amber, widget: color }
+          - name: profile
+            label: Profile
+            widget: object
+            fields:
+              - { name: name, label: Name, widget: string }
+              - { name: nameLines, label: "Name on the hero (one line per row)", widget: list }
+              - { name: role, label: Role, widget: string }
+              - { name: location, label: Location, widget: string }
+              - { name: description, label: "Short description (search results)", widget: text }
+              - { name: email, label: Email, widget: string }
+              - { name: emailSubject, label: Email subject, widget: string, required: false }
+              - { name: phone, label: "Phone (leave empty to hide)", widget: string, required: false }
+              - { name: siteUrl, label: "Site address, e.g. https://yourdomain.dev", widget: string, required: false }
+              - { name: resumeUrl, label: "Resume link (PDF)", widget: string, required: false }
+              - { name: bookingUrl, label: "Booking link (Calendly, Cal.com)", widget: string, required: false }
+              - { name: goatcounter, label: "Visitor counter code (GoatCounter, free). Empty = no tracking", widget: string, required: false }
+              - name: links
+                label: Links (leave empty to hide)
+                widget: object
+                fields:
+                  - { name: linkedin, label: LinkedIn, widget: string, required: false }
+                  - { name: github, label: GitHub, widget: string, required: false }
+                  - { name: upwork, label: Upwork, widget: string, required: false }
+              - name: availability
+                label: Availability badge
+                widget: object
+                fields:
+                  - { name: show, label: Show the green badge, widget: boolean, default: true }
+                  - { name: text, label: Badge text, widget: string }
+              - name: facts
+                label: Contact facts
+                widget: list
+                fields:
+                  - { name: label, label: Label, widget: string }
+                  - { name: value, label: Value, widget: string }
+              - { name: credit, label: Footer credit, widget: string, required: false }
+
+      - name: sections
+        label: Sections (scroll stations)
+        file: content/sections.json
+        fields:
+          - name: sections
+            label: Sections
+            widget: list
+            summary: "{{fields.nav}} · {{fields.id}}"
+            fields:
+              - { name: id, label: "Id (web address part, lowercase)", widget: string }
+              - { name: type, label: Type, widget: select, required: false, options: [hero, timeline, skills, services, projects, testimonials, posts, contact] }
+              - { name: nav, label: "Label in the top bar (empty = not shown)", widget: string, required: false }
+              - { name: scene, label: 3D scene, widget: select, options: [phone, headset, sync, chain, agentapp, globe, apps, book, helix, sphere, toolbox, knot, feed] }
+              - { name: side, label: Text side, widget: select, required: false, options: [{ label: Left, value: l }, { label: Right, value: r }] }
+              - { name: eyebrow, label: Small heading, widget: string, required: false }
+              - { name: title, label: Title, widget: string, required: false }
+              - { name: lede, label: Lead paragraph, widget: text, required: false }
+              - { name: body, label: Paragraphs, widget: list, required: false }
+              - name: stats
+                label: Numbers
+                widget: list
+                required: false
+                fields:
+                  - { name: value, label: Value, widget: string }
+                  - { name: label, label: Label, widget: string }
+              - { name: more, label: More paragraphs, widget: list, required: false }
+              - { name: notes, label: Small notes, widget: list, required: false }
+              - { name: tags, label: Tags, widget: list, required: false }
+              - name: cta
+                label: Buttons
+                widget: list
+                required: false
+                fields:
+                  - { name: label, label: Label, widget: string }
+                  - { name: href, label: Link, widget: string }
+                  - { name: primary, label: Highlighted, widget: boolean, default: false, required: false }
+              - { name: mono, label: Small mono line, widget: string, required: false }
+              - { name: limit, label: "Posts to show (posts section)", widget: number, required: false }
+              - { name: sceneOptions, label: "Scene options (advanced, JSON)", widget: code, default_language: json, output_code_only: true, required: false }
+
+      - name: lists
+        label: Services, projects, testimonials, timeline, skills
+        file: content/lists.json
+        fields:
+          - name: services
+            label: Services ("Work with me" cards)
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - { name: title, label: Title, widget: string }
+              - { name: text, label: Text, widget: text }
+              - { name: tags, label: Tags, widget: list, required: false }
+          - name: projects
+            label: Projects (section appears when there is one)
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - { name: title, label: Title, widget: string }
+              - { name: role, label: Role, widget: string, required: false }
+              - { name: text, label: What it does, widget: text }
+              - { name: tags, label: Tags, widget: list, required: false }
+              - name: links
+                label: Links
+                widget: list
+                required: false
+                fields:
+                  - { name: label, label: Label, widget: string }
+                  - { name: href, label: Link, widget: string }
+          - name: testimonials
+            label: Testimonials (section appears when there is one)
+            widget: list
+            summary: "{{fields.name}}"
+            fields:
+              - { name: quote, label: Quote, widget: text }
+              - { name: name, label: Name, widget: string }
+              - { name: role, label: Role and company, widget: string, required: false }
+          - name: timeline
+            label: Career timeline (newest first)
+            widget: list
+            summary: "{{fields.role}} · {{fields.org}}"
+            fields:
+              - { name: when, label: "Dates, e.g. 07/2024 – 11/2025", widget: string }
+              - { name: short, label: "Short label on the 3D helix, e.g. 2024–25", widget: string }
+              - { name: role, label: Role, widget: string }
+              - { name: org, label: Company, widget: string }
+              - { name: text, label: Summary, widget: text }
+          - name: skills
+            label: Skills list
+            widget: list
+            summary: "{{fields.group}}"
+            fields:
+              - { name: group, label: Group, widget: string }
+              - { name: items, label: "Items (comma separated)", widget: text }
+          - name: sphere
+            label: Skills sphere
+            widget: object
+            fields:
+              - { name: words, label: Words in the sphere, widget: list }
+              - { name: hot, label: "Highlighted words", widget: list }

@@ -71,6 +71,16 @@
   /* ---------- AR/VR headset ---------- */
   function makeHeadset() {
     var C = PF.col, g = new THREE.Group();
+    var mdl = PF.modelClone('headset');
+    if (mdl) {
+      var lm = [];
+      ['Lens_L', 'Lens_R'].forEach(function (n) {
+        var m = PF.findNode(mdl, n); if (!m) return;
+        m.material = basic(C.blue, 0.95); lm.push(m.material);
+      });
+      g.add(mdl); g.userData.lensMats = lm;
+      return g;
+    }
     var shell = mat(0x3a4a6b, 0.55, 0.32), dark = mat(0x0b0f16, 0.2, 0.7);
     var visor = new THREE.ExtrudeGeometry(PF.rrShape(2.0, 1.0, 0.36), { depth: 0.55, bevelEnabled: true, bevelThickness: 0.07, bevelSize: 0.07, bevelSegments: 5, curveSegments: 16 });
     visor.translate(0, 0, -0.275);
@@ -103,6 +113,8 @@
 
   function makeController(flip) {
     var C = PF.col, g = new THREE.Group(), m = mat(0x3a4a6b, 0.55, 0.32);
+    var mdl = PF.modelClone('controller');
+    if (mdl) { mdl.scale.x = flip; g.add(mdl); return g; }
     var ring = new THREE.Mesh(new THREE.TorusGeometry(0.26, 0.045, 12, 40), m);
     ring.position.set(0, 0.42, 0); ring.rotation.x = 0.5; g.add(ring);
     var grip = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.095, 0.62, 16), m);

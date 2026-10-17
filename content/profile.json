@@ -1,0 +1,50 @@
+{
+  "theme": {
+    "ink": "#080c13",
+    "text": "#e8ecf3",
+    "mute": "#8d99ab",
+    "blue": "#4d8dff",
+    "amber": "#ffb347"
+  },
+  "profile": {
+    "name": "Himanshu Upadhyay",
+    "nameLines": [
+      "Himanshu",
+      "Upadhyay"
+    ],
+    "role": "Senior Android Engineer",
+    "location": "Bengaluru, India",
+    "description": "Senior Android Engineer in Bengaluru. Kotlin, Jetpack Compose, WebRTC and BLE. Previously at Meta and Sony India.",
+    "siteUrl": "",
+    "email": "uhimanshuu@gmail.com",
+    "emailSubject": "Android project enquiry",
+    "phone": "",
+    "links": {
+      "linkedin": "",
+      "github": "",
+      "upwork": ""
+    },
+    "resumeUrl": "",
+    "bookingUrl": "",
+    "availability": {
+      "show": true,
+      "text": "Open to freelance, part-time and full-time work"
+    },
+    "facts": [
+      {
+        "label": "Based in",
+        "value": "Bengaluru, India (IST, UTC+5:30)"
+      },
+      {
+        "label": "Languages",
+        "value": "English, Hindi"
+      },
+      {
+        "label": "Engagements",
+        "value": "Freelance projects, part-time contracts, full-time roles"
+      }
+    ],
+    "credit": "Built with three.js",
+    "goatcounter": ""
+  }
+}

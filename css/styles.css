@@ -119,3 +119,7 @@ footer{position:relative;z-index:1;padding:1.5rem clamp(16px,5vw,72px) 2rem;font
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn,.tl li,.dots a::before{transition:none}.pill .dot{animation:none}}
 .cards h3 a{text-decoration:none}
 .cards h3 a:hover{color:var(--amber)}
+
+/* no WebGL or lite mode: show the Blender render instead of the 3D scene */
+.nogl .st.hero{background:url(../images/hero-lite.png) right 4% center/min(52vw,640px) no-repeat}
+@media (max-width:819px){.nogl .st.hero{background-position:center 2svh;background-size:min(80vw,380px)}}

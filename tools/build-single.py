@@ -24,6 +24,17 @@ html = re.sub(
     html,
 )
 
+# the Blender models go in as data URIs so a single file keeps its 3D models
+import base64
+models = {
+    "models/%s.glb" % n: "data:model/gltf-binary;base64," + base64.b64encode((root / "models" / (n + ".glb")).read_bytes()).decode()
+    for n in ("phone", "headset", "controller") if (root / "models" / (n + ".glb")).exists()
+}
+if models:
+    import json
+    inline = "<script>window.PF_INLINE=" + json.dumps(models) + ";</script>\n"
+    html = html.replace("<script>\n/* GENERATED", inline + "<script>\n/* GENERATED", 1) if "<script>\n/* GENERATED" in html else html
+
 out_dir = root / "dist"
 out_dir.mkdir(exist_ok=True)
 

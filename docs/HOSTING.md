@@ -15,10 +15,30 @@ A good default: **GitHub Pages now, move to Cloudflare Pages if you want preview
 
 ## 2. Pick the domain
 
-- Your own name is the strongest choice, because people search it. Try `himanshuupadhyay.dev`, `himanshuupadhyay.in`, `hupadhyay.dev`, or a role name such as `himanshu-android.dev`.
-- `.dev` and `.in` suit an engineer in India. `.com` is the most recognised. Avoid long, hyphenated names.
-- Buy it from a registrar that sells at cost and does not push extras, such as Cloudflare Registrar, Porkbun or Namecheap. Turn on auto-renew, because losing a portfolio domain is painful.
-- Keep the same name on GitHub, LinkedIn and your email so everything connects.
+**`himanshu.dev` is already taken** (it serves another person's portfolio), so it is not an option. Check these in the registrar's search box; I could not confirm which are free:
+
+| Idea | Why |
+| --- | --- |
+| `himanshuupadhyay.dev` | Full name, `.dev` signals engineer. First choice. |
+| `himanshuu.dev` | Short, matches your email handle. |
+| `hupadhyay.dev` | Short and professional. |
+| `himanshu-upadhyay.dev` | Fallback if the one without a hyphen is taken. |
+| `himanshuupadhyay.in` | Cheap, and suits an India-based freelancer. |
+| `himanshu.codes`, `himanshu.me` | Short alternatives. |
+
+**Cheapest ways to get it** (Porkbun's price comparison, 15 Oct 2026, `.dev`, with WHOIS privacy):
+
+| Registrar | First year | Renewal |
+| --- | --- | --- |
+| Cloudflare Registrar | about $8.20 | about $12.20 |
+| Porkbun | about $8.75 | about $12.87 |
+| Namecheap | about $11.18 | about $21.18 |
+
+Cloudflare sells at cost and is cheapest over time, and it also gives free DNS, free email forwarding and free analytics. Avoid registrars with a cheap first year and a high renewal. Turn on auto-renew, because losing a portfolio domain is painful. `.dev` domains require HTTPS, which GitHub Pages and Cloudflare Pages provide.
+
+**Free option:** a subdomain such as `himanshuupadhyay.is-a.dev` from the is-a.dev project. You request it with a pull request on their GitHub repository and point it at your site. It looked unregistered when I checked, but confirm on their site. The free fallback with no setup is `your-username.github.io`.
+
+Keep the same name on GitHub, LinkedIn and your email so everything connects.
 
 ## 3. Connect the domain to GitHub Pages
 
@@ -28,19 +48,19 @@ A good default: **GitHub Pages now, move to Cloudflare Pages if you want preview
 
 ## 4. Get a professional email address
 
-Forwarding `hello@yourdomain` to your Gmail looks far better to clients than a generic address. Cloudflare Email Routing does this free if your DNS is on Cloudflare. Then set `profile.email` in `content.js` to the new address.
+Forwarding `hello@yourdomain` to your Gmail looks far better to clients than a generic address. Cloudflare Email Routing does this free if your DNS is on Cloudflare. Then set `profile.email` (dashboard → Profile) to the new address.
 
 ## 5. Make it findable
 
 1. Add the live address to your LinkedIn profile, GitHub profile, resume header and email signature.
-2. Fill `profile.links` in `content.js` so the structured data lists your other profiles.
+2. Fill `profile.links` (dashboard → Profile) so the structured data lists your other profiles.
 3. Add the site to **Google Search Console** and request indexing of the home page.
 4. The deploy workflow already writes your text into the HTML, so search engines can read it without running the 3D.
-5. Optional: add a 1200 by 630 image and an `og:image` meta tag in `index.html` so links look good when shared on LinkedIn and WhatsApp.
+5. The link-preview image (`images/og.png`, rendered in Blender) is already wired in. It shows once `siteUrl` is set.
 
 ## 6. Know who visits
 
-Free, privacy-friendly options: Cloudflare Web Analytics, GoatCounter. Paid: Plausible. Each is one small script tag in `index.html`.
+Free, privacy-friendly: GoatCounter (built in: put your code in dashboard → Profile → Visitor counter code, see DASHBOARD.md) or Cloudflare Web Analytics. Paid: Plausible.
 
 ## 7. Optional: a contact form
 
@@ -49,4 +69,4 @@ The page uses an email button, which is fine. If you want a form, services such 
 
 ## After you buy a domain
 
-Set `profile.siteUrl` in `js/content.js` to your address (for example `https://himanshuupadhyay.dev`). The deploy step then writes the correct links into `feed.xml` and `sitemap.xml`. Submit `sitemap.xml` in Google Search Console.
+Set `siteUrl` in the dashboard (Profile) or in `content/profile.json` to your address (for example `https://himanshuupadhyay.dev`). The deploy step then writes the correct links into `feed.xml` and `sitemap.xml`. Submit `sitemap.xml` in Google Search Console. Also create a file named `CNAME` in the repository root containing just your domain (for example `himanshuupadhyay.dev`) so GitHub Pages keeps the custom domain on every deploy.

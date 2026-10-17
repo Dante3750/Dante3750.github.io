@@ -88,6 +88,17 @@
     if (p) renderPost(p); else renderList();
     if (!document.body.getAttribute('data-slug')) window.scrollTo(0, 0);
   }
+
+  /* optional free visitor counter (GoatCounter). Set profile.goatcounter to your site code. No cookies. */
+  (function () {
+    var code = P.goatcounter;
+    if (!code || /^(localhost|127\.)/.test(location.hostname)) return;
+    var sc = document.createElement('script');
+    sc.async = true; sc.src = 'https://gc.zgo.at/count.js';
+    sc.setAttribute('data-goatcounter', 'https://' + code + '.goatcounter.com/count');
+    document.head.appendChild(sc);
+  })();
+
   var mark = document.getElementById('mark'); if (mark) { mark.textContent = P.name || ''; mark.href = home; }
   var foot = document.getElementById('foot');
   if (foot) { foot.textContent = ''; var c = el('span', null, '© ' + new Date().getFullYear() + ' ' + (P.name || '')); foot.appendChild(c); }

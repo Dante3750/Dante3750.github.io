@@ -52,6 +52,12 @@ console.log('prerendered', d.querySelectorAll('section.st').length, 'sections in
 
 /* ---------- blog: list page, one static page per post, RSS feed and sitemap ---------- */
 const SITE = (process.env.SITE_URL || P.siteUrl || '').replace(/\/$/, '');
+if (SITE) {   /* link previews need absolute addresses */
+  let ix = fs.readFileSync(indexPath, 'utf8');
+  ix = ix.replace(/(<meta property="og:image" content=")[^"]*(">)/, (m, a, b) => a + SITE + '/images/og.png' + b);
+  if (!/rel="canonical"/.test(ix)) ix = ix.replace('</head>', '<link rel="canonical" href="' + SITE + '/">\n</head>');
+  fs.writeFileSync(indexPath, ix);
+}
 const posts = w.PFMD.posts();
 const blogPath = path.join(root, 'blog.html');
 const blogHtml = fs.readFileSync(blogPath, 'utf8');
@@ -79,7 +85,8 @@ for (const p of posts) {
   page = fill(page, 'blog', r.html);
   page = setMeta(page, r.title, p.summary || '');
   page = page.replace('<body class="blogpage">', '<body class="blogpage" data-slug="' + esc(p.slug) + '" data-home="../index.html" data-self="../blog.html">');
-  const og = '<meta property="og:title" content="' + esc(p.title) + '">\n<meta property="og:description" content="' + esc(p.summary || '') + '">\n<meta property="og:type" content="article">' +
+  const ogImg = SITE ? '\n<meta property="og:image" content="' + SITE + '/images/og.png">\n<meta name="twitter:card" content="summary_large_image">' : '';
+  const og = ogImg + '<meta property="og:title" content="' + esc(p.title) + '">\n<meta property="og:description" content="' + esc(p.summary || '') + '">\n<meta property="og:type" content="article">' +
     (SITE ? '\n<link rel="canonical" href="' + SITE + '/blog/' + p.slug + '.html">' : '');
   page = page.replace('</head>', og + '\n</head>');
   fs.writeFileSync(path.join(root, 'blog', p.slug + '.html'), page);

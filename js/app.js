@@ -150,7 +150,7 @@
       if (P.phone) c.appendChild(el('p', 'mono', P.phone));
       if (P.facts && P.facts.length) {
         var fd = el('dl', 'skills');
-        P.facts.forEach(function (f) { fd.appendChild(el('dt', null, f[0])); fd.appendChild(el('dd', null, f[1])); });
+        P.facts.forEach(function (f) { fd.appendChild(el('dt', null, f.label != null ? f.label : f[0])); fd.appendChild(el('dd', null, f.value != null ? f.value : f[1])); });
         c.appendChild(fd);
       }
       var links = el('div', 'cta');
@@ -453,6 +453,16 @@
     requestAnimationFrame(frame);
   }
 
+  /* optional free visitor counter (GoatCounter). Set profile.goatcounter to your site code. No cookies. */
+  (function () {
+    var code = (D.profile || {}).goatcounter;
+    if (!code || /^(localhost|127\.)/.test(location.hostname)) return;
+    var sc = document.createElement('script');
+    sc.async = true; sc.src = 'https://gc.zgo.at/count.js';
+    sc.setAttribute('data-goatcounter', 'https://' + code + '.goatcounter.com/count');
+    document.head.appendChild(sc);
+  })();
+
   applyTheme();
   render();
   initUI();
@@ -461,7 +471,9 @@
   } else {
     try {
       if (!window.THREE) throw new Error('three.js did not load');
-      initGL();
+      PF.loadModels(function () {
+        try { initGL(); } catch (err) { document.documentElement.classList.add('nogl'); if (window.console) console.warn(err); }
+      });
     } catch (err) {
       document.documentElement.classList.add('nogl');
       if (window.console) console.warn(err);

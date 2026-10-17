@@ -103,7 +103,42 @@
     return s;
   };
 
+  /* ---- Blender models (models/*.glb, built by blender/build_assets.py). If they fail to load the code-built versions are used. ---- */
+  PF.models = {};
+  PF.loadModels = function (done) {
+    var names = ['phone', 'headset', 'controller'], left = names.length, fin = false;
+    function end() { if (fin) return; fin = true; done(); }
+    if (!THREE.GLTFLoader) return end();
+    var loader = new THREE.GLTFLoader(), inl = window.PF_INLINE || {};
+    setTimeout(end, 4000);
+    names.forEach(function (n) {
+      var url = 'models/' + n + '.glb';
+      try {
+        loader.load(inl[url] || url, function (g) { PF.models[n] = g.scene; if (--left === 0) end(); },
+          undefined, function () { if (--left === 0) end(); });
+      } catch (e) { if (--left === 0) end(); }
+    });
+  };
+  PF.modelClone = function (name) {
+    var src = PF.models[name]; if (!src) return null;
+    var g = src.clone(true);
+    g.traverse(function (o) { if (o.isMesh && o.material && o.material.envMapIntensity != null) o.material.envMapIntensity = 1.8; });
+    return g;
+  };
+  PF.findNode = function (g, name) { var r = null; g.traverse(function (o) { if (o.name === name) r = o; }); return r; };
+
   PF.makePhone = function (w, h, draw) {
+    var mdl = PF.modelClone('phone'), scr = mdl && PF.findNode(mdl, 'Screen');
+    if (mdl && scr) {
+      var ct2 = PF.canvasTex(420, Math.round(420 * 1.99 / 0.91));
+      ct2.tex.flipY = false;   /* glTF UVs start at the top-left */
+      scr.material = new THREE.MeshBasicMaterial({ map: ct2.tex, toneMapped: false });
+      mdl.scale.setScalar(w / 1.0);
+      var grp = new THREE.Group(); grp.add(mdl);
+      var redraw2 = function (t) { draw(ct2.ctx, ct2.cv.width, ct2.cv.height, t); ct2.tex.needsUpdate = true; };
+      redraw2(0); PF.repaint.push(function () { redraw2(0); });
+      return { group: grp, redraw: redraw2 };
+    }
     var d = 0.09, r = 0.17;
     var bodyGeo = new THREE.ExtrudeGeometry(PF.rrShape(w, h, r), { depth: d, bevelEnabled: true, bevelThickness: 0.025, bevelSize: 0.025, bevelSegments: 4, curveSegments: 14 });
     bodyGeo.translate(0, 0, -d / 2);

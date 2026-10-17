@@ -1,0 +1,167 @@
+{
+  "services": [
+    {
+      "title": "Android app development",
+      "text": "Kotlin and Jetpack Compose apps with MVVM or MVI, offline-first data and clean architecture, from the first screen to the Play Store release.",
+      "tags": [
+        "Kotlin",
+        "Compose",
+        "Play Store"
+      ]
+    },
+    {
+      "title": "Companion apps for hardware",
+      "text": "BLE, Bluetooth and Wi-Fi Direct pairing and provisioning for AR/VR and other connected devices.",
+      "tags": [
+        "BLE",
+        "Wi-Fi Direct"
+      ]
+    },
+    {
+      "title": "Real-time video and audio",
+      "text": "WebRTC calls, live streaming and multi-device sync, wired to your backend APIs.",
+      "tags": [
+        "WebRTC",
+        "Streaming"
+      ]
+    },
+    {
+      "title": "Rescue and modernise",
+      "text": "Crash and performance audits, Compose migration, test coverage and CI for an app that already exists.",
+      "tags": [
+        "Crashlytics",
+        "Espresso",
+        "CI"
+      ]
+    },
+    {
+      "title": "Training and code review",
+      "text": "Live Kotlin and Android sessions for learners and teams, plus code reviews that raise the standard.",
+      "tags": [
+        "Kotlin",
+        "Mentoring"
+      ]
+    }
+  ],
+  "projects": [],
+  "testimonials": [],
+  "timeline": [
+    {
+      "when": "07/2024 – 11/2025",
+      "short": "2024–25",
+      "role": "Lead Android Engineer",
+      "org": "Accenture, client Meta",
+      "text": "AR/VR device provisioning at scale, team of 5."
+    },
+    {
+      "when": "12/2021 – 05/2024",
+      "short": "2021–24",
+      "role": "Senior Software Engineer",
+      "org": "Wipro, client Sony India",
+      "text": "WebRTC streaming, watch-party sync, Compose migration."
+    },
+    {
+      "when": "12/2020 – 12/2021",
+      "short": "2020–21",
+      "role": "Software Engineer",
+      "org": "Fulcrum Digital, Pune",
+      "text": "Led the Al Hilal Mobile Agent App for 500+ insurance field agents."
+    },
+    {
+      "when": "02/2020 – 12/2020",
+      "short": "2020",
+      "role": "Freelance Android Trainer",
+      "org": "Self-employed, Bengaluru",
+      "text": "Live Kotlin and Android training for 500 to 1,000 learners in 4 to 5 countries."
+    },
+    {
+      "when": "06/2018 – 02/2020",
+      "short": "2018–20",
+      "role": "Android Developer",
+      "org": "NetConnect, Bengaluru",
+      "text": "4+ in-house apps used by 500+ employees."
+    },
+    {
+      "when": "01/2017 – 01/2018",
+      "short": "2017–18",
+      "role": "Android Developer",
+      "org": "Anytime Softcare, Noida",
+      "text": "Built Inkpot, an educational content app, from scratch."
+    }
+  ],
+  "skills": [
+    {
+      "group": "Android",
+      "items": "Kotlin, Java, Jetpack Compose, Room, Navigation, DataStore, WorkManager"
+    },
+    {
+      "group": "Architecture",
+      "items": "MVVM, MVI, Clean Architecture, Hilt/Dagger, offline-first design"
+    },
+    {
+      "group": "Concurrency",
+      "items": "Coroutines, Flow, LiveData"
+    },
+    {
+      "group": "Real time",
+      "items": "WebRTC, live streaming, audio/video sync, BLE, Bluetooth, Wi-Fi Direct"
+    },
+    {
+      "group": "Testing",
+      "items": "JUnit, Mockito, Espresso, TDD"
+    },
+    {
+      "group": "Quality",
+      "items": "Profiling, memory leaks, ProGuard/R8, security, accessibility"
+    },
+    {
+      "group": "Delivery",
+      "items": "Gradle, GitHub Actions, GitLab CI, Play Store releases"
+    },
+    {
+      "group": "Cloud, other",
+      "items": "Firebase, Crashlytics, AWS, Node.js, Flutter, React.js, Ethereum, Hyperledger"
+    }
+  ],
+  "sphere": {
+    "words": [
+      "Kotlin",
+      "Java",
+      "Jetpack Compose",
+      "Coroutines",
+      "Flow",
+      "Room",
+      "Hilt",
+      "WebRTC",
+      "BLE",
+      "Wi-Fi Direct",
+      "MVVM",
+      "MVI",
+      "Clean Architecture",
+      "Retrofit",
+      "WorkManager",
+      "Espresso",
+      "Mockito",
+      "JUnit",
+      "Firebase",
+      "Crashlytics",
+      "Gradle",
+      "GitHub Actions",
+      "GitLab CI",
+      "AWS",
+      "Node.js",
+      "Flutter",
+      "React.js",
+      "Blockchain",
+      "R8",
+      "TalkBack"
+    ],
+    "hot": [
+      "Kotlin",
+      "Jetpack Compose",
+      "WebRTC",
+      "BLE",
+      "Clean Architecture"
+    ]
+  }
+}

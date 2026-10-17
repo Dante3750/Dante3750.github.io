@@ -2,12 +2,13 @@
 
 A scroll-driven 3D portfolio built with plain HTML, CSS, JavaScript and [three.js](https://threejs.org). Every section has its own 3D scene drawn from the work it describes: an AR/VR headset for the Meta work, phones for the Android and streaming work, a blockchain ring, a globe for training, app tiles, an open book and more.
 
-There is no framework. All the words, colours and scene choices live in one file, `js/content.js`, so you can change the site without touching any 3D code.
+There is no framework. All the words, colours and scene choices live in plain files in `content/`, and a free browser dashboard at `/admin` edits them, so you can change the site without touching any 3D code. Every change is a git commit.
 
 ## Guides
 
 | Guide | What is in it |
 | --- | --- |
+| [docs/DASHBOARD.md](docs/DASHBOARD.md) | Set up the free `/admin` dashboard and visitor counter |
 | [docs/UPDATING.md](docs/UPDATING.md) | Add jobs, projects, testimonials, sections and new 3D scenes |
 | [docs/HOSTING.md](docs/HOSTING.md) | Choose a host and a domain, connect them, set up email, get found |
 | [docs/GETTING-WORK.md](docs/GETTING-WORK.md) | Use the site to win freelance, part-time and full-time work |
@@ -23,7 +24,7 @@ python3 -m http.server 8000
 
 It needs internet access for three.js and the Google Fonts.
 
-## What you can change in `js/content.js`
+## What you can change (in `content/`, or in the dashboard)
 
 | Part | What it does |
 | --- | --- |
@@ -33,7 +34,7 @@ It needs internet access for three.js and the Google Fonts.
 | `timeline` | The jobs list. It also drives the nodes on the 3D helix. |
 | `skills`, `sphere` | The skills list and the words in the 3D sphere |
 | `services` | The "Work with me" cards |
-| `js/posts.js` | Your blog posts (Markdown). Shown on `blog.html`, in Notes and in the RSS feed |
+| `content/posts/*.md` | Your blog posts (Markdown). Shown on `blog.html`, in Notes and in the RSS feed |
 | `projects`, `testimonials` | Empty at first. Each section appears as soon as you add an entry. |
 
 ### Scenes
@@ -73,6 +74,7 @@ See [docs/HOSTING.md](docs/HOSTING.md) for a custom domain.
 ## Other features
 
 - **Blog and RSS:** `blog.html` lists and shows posts. The deploy step builds a static page for each post, `feed.xml` and `sitemap.xml`.
+- **Blender models:** the phone, headset and controller are real glTF models made by `blender/build_assets.py`, with a code-built fallback.
 - **Cinematic 3D:** bloom, a studio reflection map, a light film grade and drifting dust. It switches itself off on slow devices.
 - **Lite mode:** the footer link turns the 3D off for slow machines. It also switches on for visitors who ask their browser to save data.
 - **No WebGL:** the text stays fully readable.
@@ -84,8 +86,11 @@ See [docs/HOSTING.md](docs/HOSTING.md) for a custom domain.
 ```
 index.html             page shell, meta tags
 css/styles.css         layout and typography
-js/content.js          all your content (edit this)
-js/posts.js            your blog posts (edit this)
+content/                your content: profile.json, sections.json, lists.json, posts/*.md (edit these, or use /admin)
+js/content.js, posts.js generated from content/ by tools/build-data.js (do not edit)
+admin/                 free content dashboard (Sveltia CMS)
+blender/build_assets.py  builds models/*.glb and images/*.png with Blender
+models/, images/       3D models and rendered images
 blog.html              blog list and post pages
 js/helpers.js          shared 3D helpers and phone-screen painters
 js/scenes.js           the 3D scenes
