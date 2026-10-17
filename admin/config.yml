@@ -2,13 +2,13 @@
 # Docs: docs/DASHBOARD.md
 backend:
   name: github
-  repo: YOUR-GITHUB-USERNAME/YOUR-REPO   # <- change this to your repository, e.g. himanshu/portfolio
+  repo: Dante3750/Dante3750.github.io
   branch: main
 
 media_folder: images/uploads
 public_folder: images/uploads
-site_url: https://example.com
-display_url: https://example.com
+site_url: https://dante3750.github.io
+display_url: https://dante3750.github.io
 locale: en
 
 collections:
