@@ -23,7 +23,7 @@
     setHead('Blog | ' + (P.name || ''), 'Monthly updates and notes from ' + (P.name || '') + '.');
     var head = el('header', 'bl-head');
     head.appendChild(el('p', 'eyebrow', 'Notes'));
-    head.appendChild(el('h1', null, 'What I am building, month by month'));
+    head.appendChild(el('h1', null, 'Notes'));
     var sub = el('p', 'bl-sub'); sub.appendChild(document.createTextNode('Monthly updates, deep dives and demos. '));
     var rss = el('a', null, 'RSS feed'); rss.href = 'feed.xml'; sub.appendChild(rss); head.appendChild(sub);
     app.appendChild(head);

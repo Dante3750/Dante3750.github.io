@@ -128,3 +128,9 @@ Idea for a monthly routine: on the last day of the month, write five lines (ship
 ## Rebuild the Blender models and images
 
 `blender/build_assets.py` creates `models/*.glb` (phone, headset, controller) and `images/og.png` (link preview) and `images/hero-lite.png` (shown when 3D is off). Run `pip install bpy` then `python3 blender/build_assets.py`, edit the colours or shapes at the top of the script, and commit the new files. The site falls back to code-built shapes if a model cannot load.
+
+## Daily reading list and resume page
+
+- **Daily reading** (`daily.html` and the "Daily" section on the home page): a GitHub Actions job runs every morning (about 06:00 IST), reads the feeds in `content/feed-sources.json` and rebuilds the site. Only headlines and links are kept; each link opens the original article. To change what shows up, edit the `sources` list there (any RSS or Atom address works). To follow your own Medium posts, set `links.medium` in `content/profile.json` to `https://medium.com/@yourname`. Run it now from the repo's **Actions** tab, **Deploy to GitHub Pages**, **Run workflow**. If every feed fails, the last saved list stays.
+- **Resume** (`resume.html`): built from your profile, jobs and skills. Open it and press **Print or save as PDF**. It is plain text, so applicant-tracking systems can read it. The **Resume** button on the home page opens it unless you set `resumeUrl`.
+- **Quick jump**: press Ctrl+K (or `/`) on the home page.

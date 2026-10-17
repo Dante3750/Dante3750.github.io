@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Resume | Himanshu Upadhyay</title>
+<meta name="description" content="Resume of Himanshu Upadhyay, Android developer in Bengaluru.">
+<style>
+:root{color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#15181e;background:#f4f5f7}
+main{max-width:52rem;margin:0 auto;padding:2.5rem 2rem 4rem;background:#fff;min-height:100vh}
+h1{font-size:2rem;margin:0}h2{font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;color:#4a5568;border-bottom:1px solid #d9dde3;padding-bottom:.3rem;margin:1.8rem 0 .8rem}
+.sub{margin:.2rem 0 0;color:#4a5568}.job{margin:0 0 1rem}.job h3{font-size:1rem;margin:0}.job .w{color:#4a5568;font-size:.88rem;margin:0}
+p{margin:.2rem 0}dl{margin:0}dt{font-weight:600;margin-top:.5rem}dd{margin:0;color:#2d3340}
+a{color:#0b57d0}.bar{display:flex;gap:.8rem;margin-bottom:1rem;font-size:.9rem}
+button{font:inherit;padding:.4rem .9rem;border:1px solid #15181e;background:#15181e;color:#fff;border-radius:6px;cursor:pointer}
+@media print{body{background:#fff}main{padding:0;max-width:none}.bar{display:none}a{color:inherit;text-decoration:none}}
+</style>
+</head>
+<body>
+<main id="r"><noscript>This page needs JavaScript.</noscript></main>
+<script src="js/content.js"></script>
+<script>
+(function(){
+  var D=window.PORTFOLIO,P=D.profile,r=document.getElementById('r');
+  function e(t,c,x){var n=document.createElement(t);if(c)n.className=c;if(x!=null)n.textContent=x;return n}
+  var bar=e('div','bar');var b=e('button',null,'Print or save as PDF');b.onclick=function(){window.print()};bar.appendChild(b);
+  var home=e('a',null,'Back to site');home.href='index.html';bar.appendChild(home);r.appendChild(bar);
+  r.appendChild(e('h1',null,P.name));r.appendChild(e('p','sub',P.role+' · '+P.location));
+  var c=[P.email,P.phone].filter(Boolean);Object.keys(P.links||{}).forEach(function(k){if(P.links[k])c.push(P.links[k])});
+  r.appendChild(e('p','sub',c.join('  ·  ')));
+  r.appendChild(e('h2',null,'Summary'));r.appendChild(e('p',null,P.description));
+  r.appendChild(e('h2',null,'Experience'));
+  (D.timeline||[]).forEach(function(t){var j=e('div','job');j.appendChild(e('h3',null,t.role+', '+t.org));j.appendChild(e('p','w',t.when));j.appendChild(e('p',null,t.text));r.appendChild(j)});
+  r.appendChild(e('h2',null,'Skills'));var dl=e('dl');(D.skills||[]).forEach(function(g){dl.appendChild(e('dt',null,g.group));dl.appendChild(e('dd',null,g.items))});r.appendChild(dl);
+  document.title='Resume | '+P.name;
+})();
+</script>
+</body>
+</html>

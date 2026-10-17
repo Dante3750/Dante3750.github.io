@@ -3,6 +3,8 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  schedule:
+    - cron: '30 0 * * *'   # every day, about 06:00 IST: refreshes the daily reading list
   workflow_dispatch:
 
 permissions:
@@ -32,6 +34,7 @@ jobs:
         run: |
           npm install --no-save --no-package-lock jsdom js-yaml
           node tools/build-data.js
+          node tools/fetch-feed.js || echo 'feed fetch failed, using the saved list'
           node tools/prerender.js
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

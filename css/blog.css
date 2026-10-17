@@ -44,3 +44,12 @@ body.blogpage{background:radial-gradient(60% 40% at 85% 0%,rgba(77,141,255,.16),
 .bl-next a:hover{border-color:var(--blue)}
 .bl-cta{margin-top:2rem;padding:1.4rem;border:1px solid var(--line);border-radius:14px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;background:var(--scrim)}
 .bl-cta p{margin:0;font:600 1.1rem var(--f-display)}
+
+/* daily reading */
+.rd-search{width:100%;font:500 .95rem var(--f-body,inherit);padding:.75rem 1rem;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.04);color:var(--text);margin-bottom:1rem}
+.rd-search:focus{outline:2px solid var(--blue);outline-offset:1px}
+.rd-list{display:flex;flex-direction:column}
+.rd-day{font:500 .8rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--amber);margin:1.8rem 0 .4rem}
+.rd-item{display:flex;flex-direction:column;gap:.3rem;padding:.9rem 0;border-top:1px solid var(--line);text-decoration:none;color:var(--text)}
+.rd-item:hover .rd-title{color:var(--amber)}
+.rd-title{font:600 1.08rem/1.35 var(--f-display)}

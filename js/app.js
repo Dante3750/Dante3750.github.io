@@ -11,7 +11,8 @@
 
   /* sections of these types disappear until their list in content.js has entries */
   D.posts = window.PFMD ? window.PFMD.posts() : [];
-  var NEEDS = { services: 'services', projects: 'projects', testimonials: 'testimonials', posts: 'posts' };
+  D.radar = (window.RADAR && window.RADAR.items) || [];
+  var NEEDS = { services: 'services', projects: 'projects', testimonials: 'testimonials', posts: 'posts', radar: 'radar' };
   D.sections = D.sections.filter(function (s) { var k = NEEDS[s.type]; return !(k && !(D[k] && D[k].length)); });
 
   var LINK_LABELS = { linkedin: 'LinkedIn', github: 'GitHub', x: 'X', medium: 'Medium', youtube: 'YouTube', stackoverflow: 'Stack Overflow', devto: 'DEV', gitlab: 'GitLab', upwork: 'Upwork', toptal: 'Toptal', fiverr: 'Fiverr', behance: 'Behance' };
@@ -75,7 +76,7 @@
 
   function buildCopy(s) {
     var P = D.profile || {};
-    var wide = s.type === 'timeline' || s.type === 'posts' || s.type === 'services' || s.type === 'projects' || s.type === 'testimonials';
+    var wide = s.type === 'timeline' || s.type === 'posts' || s.type === 'radar' || s.type === 'services' || s.type === 'projects' || s.type === 'testimonials';
     var c = el('div', 'copy' + (wide ? ' wide' : ''));
 
     if (s.type === 'hero' && P.availability && P.availability.show) {
@@ -134,6 +135,16 @@
       });
       c.appendChild(pl);
     }
+    if (s.type === 'radar') {
+      var rl = el('ul', 'cards feedlist radar');
+      D.radar.slice(0, s.limit || 6).forEach(function (r) {
+        var li = el('li');
+        li.appendChild(el('p', 'mono', r.k + ' · ' + r.s + ' · ' + new Date(r.d).toLocaleDateString('en', { day: 'numeric', month: 'short' })));
+        var h = el('h3'), a = el('a', null, r.t); a.href = r.u; a.target = '_blank'; a.rel = 'noopener'; h.appendChild(a); li.appendChild(h);
+        rl.appendChild(li);
+      });
+      c.appendChild(rl);
+    }
     if (s.type === 'services') c.appendChild(cardList(D.services));
     if (s.type === 'projects') c.appendChild(cardList(D.projects));
     if (s.type === 'testimonials') {
@@ -156,7 +167,7 @@
       var links = el('div', 'cta');
       if (P.bookingUrl) links.appendChild(btnLink('Book a call', P.bookingUrl, true, true));
       if (P.email) links.appendChild(btnLink('Email me', 'mailto:' + P.email + (P.emailSubject ? '?subject=' + encodeURIComponent(P.emailSubject) : ''), !P.bookingUrl, false));
-      if (P.resumeUrl) links.appendChild(btnLink('Resume', P.resumeUrl, false, true));
+      links.appendChild(btnLink('Resume', P.resumeUrl || 'resume.html', false, !!P.resumeUrl));
       var L = P.links || {};
       Object.keys(L).forEach(function (k) {
         if (!L[k]) return;
@@ -170,7 +181,7 @@
       var ul = el('ul', 'tags'); s.tags.forEach(function (t) { ul.appendChild(el('li', null, t)); }); c.appendChild(ul);
     }
     var ctaList = (s.cta || []).slice();
-    if (s.type === 'hero' && P.resumeUrl) ctaList.push({ label: 'Resume', href: P.resumeUrl, external: true });
+    if (s.type === 'hero') ctaList.push({ label: 'Resume', href: P.resumeUrl || 'resume.html', external: !!P.resumeUrl });
     if (ctaList.length) {
       var cta = el('div', 'cta');
       ctaList.forEach(function (b) { cta.appendChild(btnLink(b.label, b.href, b.primary, b.external)); });
@@ -297,11 +308,17 @@
     var keyLight = new THREE.PointLight(PF.col.blue, 1.6, 22); scene.add(keyLight);
     var warmLight = new THREE.PointLight(PF.col.amber, 0.7, 18); scene.add(warmLight);
 
-    var st = [], obj = [], upd = [];
+    /* Stations are built one at a time as you approach them (and in the background while idle),
+       so the page never freezes while loading. */
+    var st = [], obj = [], upd = [], built = [];
     sections.forEach(function (s, i) {
-      var g = new THREE.Group(); g.position.z = -i * STEP; scene.add(g);
+      var g = new THREE.Group(); g.position.z = -i * STEP; g.visible = false; scene.add(g);
       var o = new THREE.Group(); g.add(o);
-      st.push(g); obj.push(o);
+      st.push(g); obj.push(o); upd.push(null); built.push(false);
+    });
+    function build(i) {
+      built[i] = true;
+      var s = sections[i], o = obj[i];
       var fn = PF.scenes[s.scene] || PF.scenes.knot, u;
       try { u = fn(o, s.sceneOptions || {}, X); } catch (err) { if (window.console) console.warn('Scene "' + s.scene + '" failed for section "' + s.id + '"', err); }
       var base = typeof u === 'function' ? u : function () {};
@@ -316,12 +333,13 @@
       dust.frustumCulled = false; o.add(dust);
       var floor = new THREE.Group(); floor.position.y = -2.3; floor.rotation.x = -Math.PI / 2; o.add(floor);
       [1.6, 2.6, 3.8].forEach(function (r, k) { floor.add(new THREE.Mesh(new THREE.RingGeometry(r, r + 0.012, 96), new THREE.MeshBasicMaterial({ color: tint, transparent: true, opacity: 0.32 - k * 0.08, side: THREE.DoubleSide, depthWrite: false, blending: THREE.AdditiveBlending }))); });
-      upd.push(function (t, dt, redraw) {
+      upd[i] = (function (t, dt, redraw) {
         dust.rotation.y = t * 0.05; dust.position.y = Math.sin(t * 0.3) * 0.15;
         floor.rotation.z = t * 0.08;
         base(t, dt, redraw);
       });
-    });
+      try { renderer.compile(scene, camera); } catch (err) { /* ignore */ }
+    }
 
     /* star field */
     var count = window.innerWidth < 820 ? 1200 : 2800, sp = new Float32Array(count * 3);
@@ -402,26 +420,29 @@
           fragmentShader: 'uniform sampler2D tDiffuse; uniform float time; uniform float amt; varying vec2 vUv;' +
             'float hash(vec2 p){ return fract(sin(dot(p, vec2(12.9898,78.233))) * 43758.5453); }' +
             'void main(){ vec2 c = vUv - 0.5; float r2 = dot(c,c);' +
-            'vec2 off = c * r2 * 0.012 * amt;' +
-            'vec3 col = vec3(texture2D(tDiffuse, vUv + off).r, texture2D(tDiffuse, vUv).g, texture2D(tDiffuse, vUv - off).b);' +
-            'col *= 1.0 - smoothstep(0.18, 0.62, r2) * 0.55 * amt;' +
-            'col += (hash(vUv * 900.0 + time) - 0.5) * 0.028 * amt;' +
+            'vec3 col = texture2D(tDiffuse, vUv).rgb;' +
+            'col *= 1.0 - smoothstep(0.2, 0.65, r2) * 0.45 * amt;' +
             'gl_FragColor = vec4(col, 1.0); }'
         });
         composer.addPass(grade);
       } catch (err) { composer = null; useFX = false; if (window.console) console.warn('post-processing off', err); }
     }
 
-    /* compile every material once so scenes do not stutter the first time they appear */
-    try { renderer.compile(scene, camera); } catch (err) { /* ignore */ }
+    /* the first station is built before the first frame; the rest follow lazily */
+    build(Math.max(0, Math.min(N - 1, Math.round(targetT(window.scrollY + window.innerHeight / 2)))));
 
-    var last = performance.now(), clock = 0, tCur = targetT(window.scrollY + window.innerHeight / 2), acc = 1;
+    var frameNo = 0, last = performance.now(), clock = 0, tCur = targetT(window.scrollY + window.innerHeight / 2), acc = 1;
     function frame(now) {
       requestAnimationFrame(frame);
-      var dt = Math.min((now - last) / 1000, 0.05); last = now;
+      var dt = Math.max(0, Math.min((now - last) / 1000, 0.05)); last = now;
       clock += dt * MOTION;
       var tT = targetT(window.scrollY + window.innerHeight / 2);
-      tCur = RM ? tT : tCur + (tT - tCur) * (1 - Math.exp(-dt * 5));
+      tCur = RM ? tT : tCur + (tT - tCur) * (1 - Math.exp(-dt * 7));
+      /* build at most one station per frame: the nearest unbuilt one if it is close, otherwise warm the rest while idle */
+      var want = -1, wd = 99;
+      for (var bi = 0; bi < N; bi++) { if (!built[bi]) { var dd = Math.abs(tCur - bi); if (dd < wd) { wd = dd; want = bi; } } }
+      if (want >= 0 && (wd < 1.7 || (dt < 0.022 && frameNo > 20))) build(want);
+      frameNo++;
       var k = 1 - Math.exp(-dt * 4);
       S.mx += (S.px - S.mx) * k; S.my += (S.py - S.my) * k;
       if (camCurve) {
@@ -429,13 +450,13 @@
         camera.position.copy(camCurve.getPoint(u));
         camera.lookAt(tgtCurve.getPoint(u));
       } else { camera.position.set(0, 0, 8.4); camera.lookAt(0, 0, 0); }
-      camera.position.x += S.mx * 0.45; camera.position.y -= S.my * 0.25; camera.position.z += camDist - 8.4;
-      camera.rotateZ(Math.sin(clock * 0.25) * 0.012 - S.mx * 0.02);
+      camera.position.x += S.mx * 0.16; camera.position.y -= S.my * 0.09; camera.position.z += camDist - 8.4;
+      camera.rotateZ(Math.sin(clock * 0.25) * 0.006);
       var near = Math.max(0, Math.min(N - 1, Math.round(tCur)));
       keyLight.position.set(-2, 3, -near * STEP + 5); warmLight.position.set(4, -2, -near * STEP + 4);
       acc += dt; var redraw = false; if (acc > 1 / 30) { acc = 0; redraw = true; }
       for (var i2 = 0; i2 < N; i2++) {
-        var vis = Math.abs(tCur - i2) < 1.0;
+        var vis = built[i2] && Math.abs(tCur - i2) < 1.0;
         st[i2].visible = vis;
         if (vis) upd[i2](clock, dt, redraw);
       }
@@ -448,6 +469,7 @@
       } else {
         renderer.render(scene, camera);
       }
+      if (frameNo === 3) document.documentElement.classList.add('ready');
     }
     var slow = 0;
     requestAnimationFrame(frame);

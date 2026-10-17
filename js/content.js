@@ -13,9 +13,9 @@ window.PORTFOLIO = {
       "Himanshu",
       "Upadhyay"
     ],
-    "role": "Senior Android Engineer",
+    "role": "Android Developer",
     "location": "Bengaluru, India",
-    "description": "Senior Android Engineer in Bengaluru. Kotlin, Jetpack Compose, WebRTC and BLE. Previously at Meta and Sony India.",
+    "description": "Himanshu Upadhyay is an Android developer in Bengaluru. He builds apps that connect to hardware and stream in real time, and has worked on products for Meta and Sony India.",
     "siteUrl": "",
     "email": "uhimanshuu@gmail.com",
     "emailSubject": "Android project enquiry",
@@ -45,7 +45,8 @@ window.PORTFOLIO = {
         "value": "Freelance projects, part-time contracts, full-time roles"
       }
     ],
-    "credit": "Built with three.js"
+    "credit": "Built with three.js",
+    "goatcounter": ""
   },
   "sections": [
     {
@@ -53,8 +54,8 @@ window.PORTFOLIO = {
       "type": "hero",
       "scene": "phone",
       "side": "l",
-      "eyebrow": "Android engineer · Bengaluru, India",
-      "lede": "I build Android apps that talk to hardware, stream in real time and keep working on a bad connection.",
+      "eyebrow": "Android developer · Bengaluru, India",
+      "lede": "I'm Himanshu. For over seven years I've built Android apps that have to talk to other devices, stream video, or keep working when the network drops.",
       "tags": [
         "Kotlin",
         "Jetpack Compose",
@@ -72,7 +73,7 @@ window.PORTFOLIO = {
           "href": "#meta"
         }
       ],
-      "mono": "7+ years · led a team of 5 · Meta, Sony India",
+      "mono": "7+ years of Android · led a team of 5 · worked on Meta and Sony products",
       "sceneOptions": {
         "title": "Provisioning"
       }
@@ -82,9 +83,9 @@ window.PORTFOLIO = {
       "nav": "Work",
       "scene": "headset",
       "eyebrow": "2024 – 2025 · Accenture, for Meta",
-      "title": "Setting up AR/VR devices from a phone",
+      "title": "Making a phone set up a VR headset",
       "body": [
-        "I led Android work on the tooling that provisions and configures AR/VR devices over BLE, Bluetooth and Wi-Fi Direct, written in Kotlin and Jetpack Compose."
+        "At Accenture I worked on a Meta tool that lets a phone find, pair and configure AR/VR headsets over Bluetooth, BLE and Wi-Fi Direct. I led the Android side, in Kotlin and Jetpack Compose."
       ],
       "stats": [
         {
@@ -101,10 +102,10 @@ window.PORTFOLIO = {
         }
       ],
       "more": [
-        "I root-caused connectivity bugs across 4 to 5 regions with ADB, logcat and system logs, gated each release on Espresso tests through GitHub Actions and GitLab CI, and ran code reviews for a team of 5."
+        "A lot of the job was chasing connection bugs that only showed up in some regions or on some devices. I dug through ADB and logcat to find the cause, fixed it, and made sure Espresso tests ran in GitHub Actions and GitLab CI before every release. I also reviewed code for a team of 5."
       ],
       "notes": [
-        "In parallel I delivered the Android module for the Metrolinx travel project with Compose and WorkManager."
+        "On the side I built the Android part of the Metrolinx travel project."
       ],
       "sceneOptions": {
         "devices": 64,
@@ -132,9 +133,9 @@ window.PORTFOLIO = {
       "id": "sony",
       "scene": "sync",
       "eyebrow": "2021 – 2024 · Wipro, for Sony India",
-      "title": "Watching together, in sync",
+      "title": "Watch parties that stay in sync",
       "body": [
-        "I shipped cross-device watch-party sync for a live-streaming product and built WebRTC audio and video communication on top of backend REST APIs."
+        "At Wipro I worked on a live streaming app for Sony India. I built the watch-party feature, where people on different phones watch the same stream together, and the WebRTC calling that sits on top of the backend APIs."
       ],
       "stats": [
         {
@@ -143,23 +144,23 @@ window.PORTFOLIO = {
         },
         {
           "value": "12% → 4%",
-          "label": "crash rate after Crashlytics fixes and TDD"
+          "label": "crash rate, after fixing what Crashlytics showed and writing tests first"
         }
       ],
       "more": [
-        "Offline-first data with Room and WorkManager, key screens moved to Jetpack Compose, TalkBack and contrast fixes, R8 shrinking, and ownership of Play Store releases."
+        "I also made the app work offline with Room and WorkManager, moved some screens to Compose, fixed TalkBack and contrast problems, shrank the app with R8, and handled the Play Store releases."
       ]
     },
     {
       "id": "web3",
       "scene": "chain",
       "eyebrow": "2021 – 2024 · Wipro, for Sony India",
-      "title": "Digital identity on the blockchain",
+      "title": "A blockchain side project at work",
       "body": [
-        "On the Mocopi NFT project I integrated blockchain-based digital identity features on mobile devices."
+        "On Sony's Mocopi NFT project I added blockchain-based digital identity to the mobile app."
       ],
       "more": [
-        "Blockchain also ran through my teaching, where I covered the fundamentals using what I learned in production. I hold the Certified Web3 Associate and Certified Hyperledger certificates."
+        "I also cover blockchain basics when I teach, and I hold the Certified Web3 Associate and Certified Hyperledger certificates."
       ],
       "tags": [
         "Ethereum",
@@ -181,18 +182,18 @@ window.PORTFOLIO = {
       "id": "fulcrum",
       "scene": "agentapp",
       "eyebrow": "2020 – 2021 · Fulcrum Digital, Pune",
-      "title": "An insurance app for field agents",
+      "title": "An app for insurance agents",
       "body": [
-        "I led end-to-end Android development of the Al Hilal Mobile Agent App, covering medical and life insurance workflows."
+        "At Fulcrum Digital I led the Android development of the Al Hilal Mobile Agent App, which agents use for medical and life insurance."
       ],
       "stats": [
         {
           "value": "500+",
-          "label": "field agents using the app"
+          "label": "field agents using it"
         }
       ],
       "more": [
-        "I built the Kotlin features for real-time data management in online policy processing and owned the API and web-service integration with the backend, which improved data-sync reliability."
+        "I wrote the Kotlin code that keeps policy data in sync while an agent works online, and handled the connection to the backend APIs, which made syncing more reliable."
       ],
       "sceneOptions": {
         "agents": 500
@@ -202,9 +203,9 @@ window.PORTFOLIO = {
       "id": "trainer",
       "scene": "globe",
       "eyebrow": "2020 · Freelance",
-      "title": "Teaching Android to learners worldwide",
+      "title": "Teaching Android online",
       "body": [
-        "I ran live Kotlin and Android training and designed the exercises and learning material for hands-on practice."
+        "In 2020 I taught Kotlin and Android live, and wrote the exercises people practised on."
       ],
       "stats": [
         {
@@ -245,9 +246,9 @@ window.PORTFOLIO = {
       "id": "netconnect",
       "scene": "apps",
       "eyebrow": "2018 – 2020 · NetConnect, Bengaluru",
-      "title": "Internal apps people used every day",
+      "title": "Small apps a lot of people used",
       "body": [
-        "I built and maintained 4+ in-house Android apps for attendance, asset tracking, billing and internal operations."
+        "At NetConnect I built and looked after four or more internal Android apps for attendance, asset tracking, billing and day-to-day operations."
       ],
       "stats": [
         {
@@ -260,7 +261,7 @@ window.PORTFOLIO = {
         }
       ],
       "more": [
-        "I integrated REST APIs, fixed production crashes to improve stability, and shipped new features and UX improvements with backend and product stakeholders."
+        "I connected them to REST APIs, fixed crashes that were hurting people in production, and shipped new features with the backend and product teams."
       ],
       "sceneOptions": {
         "apps": [
@@ -289,7 +290,7 @@ window.PORTFOLIO = {
       "eyebrow": "2017 – 2018 · Anytime Softcare, Noida",
       "title": "Where it started: Inkpot",
       "body": [
-        "I built Inkpot, a native Android educational content delivery app, end to end from scratch, and implemented the core mobile features and design patterns for in-house Android products."
+        "My first job was at Anytime Softcare in Noida. I built Inkpot there from scratch, an Android app that delivers educational content."
       ]
     },
     {
@@ -298,7 +299,7 @@ window.PORTFOLIO = {
       "nav": "Career",
       "scene": "helix",
       "eyebrow": "Career",
-      "title": "From Inkpot to AR/VR",
+      "title": "The short version",
       "mono": "B.Tech Computer Science, Dr. APJ Abdul Kalam Technical University, 2016 · Certified Web3 Associate · Certified Hyperledger"
     },
     {
@@ -306,8 +307,8 @@ window.PORTFOLIO = {
       "type": "skills",
       "nav": "Skills",
       "scene": "sphere",
-      "eyebrow": "Toolbox",
-      "title": "What I work with"
+      "eyebrow": "Skills",
+      "title": "What I use day to day"
     },
     {
       "id": "notes",
@@ -316,9 +317,9 @@ window.PORTFOLIO = {
       "scene": "feed",
       "limit": 3,
       "eyebrow": "Notes",
-      "title": "What I am building, month by month",
+      "title": "Notes",
       "body": [
-        "A short log each month: what shipped, what broke, what I learned."
+        "I write here about once a month: what I worked on, what went wrong and what I picked up."
       ],
       "cta": [
         {
@@ -333,14 +334,33 @@ window.PORTFOLIO = {
       ]
     },
     {
+      "id": "daily",
+      "type": "radar",
+      "nav": "Daily",
+      "scene": "knot",
+      "limit": 6,
+      "eyebrow": "Daily reading",
+      "title": "What I'm reading today",
+      "body": [
+        "Every morning this page pulls in new posts on AI, Android and Kotlin from sources I follow, including Medium. I didn't write them. Each link goes to the original."
+      ],
+      "cta": [
+        {
+          "label": "See all of today's reading",
+          "href": "daily.html",
+          "primary": true
+        }
+      ]
+    },
+    {
       "id": "hire",
       "type": "services",
       "nav": "Hire me",
       "scene": "toolbox",
       "eyebrow": "Work with me",
-      "title": "Freelance, part-time or full-time",
+      "title": "Need an Android developer?",
       "body": [
-        "I take on Android projects alongside or instead of a day job. Tell me what you need shipped and I will tell you how I would approach it."
+        "I take freelance and part-time projects, and I'm open to a full-time role with the right team. Send a short note about what you're building and I'll tell you honestly whether I can help."
       ]
     },
     {
@@ -348,8 +368,8 @@ window.PORTFOLIO = {
       "type": "projects",
       "nav": "Projects",
       "scene": "phone",
-      "eyebrow": "Selected projects",
-      "title": "Things you can open and try",
+      "eyebrow": "Projects",
+      "title": "Things you can try",
       "sceneOptions": {
         "title": "Projects"
       }
@@ -359,7 +379,7 @@ window.PORTFOLIO = {
       "type": "testimonials",
       "scene": "knot",
       "eyebrow": "Kind words",
-      "title": "What people say"
+      "title": "From people I've worked with"
     },
     {
       "id": "contact",
@@ -367,16 +387,16 @@ window.PORTFOLIO = {
       "nav": "Contact",
       "scene": "knot",
       "eyebrow": "Contact",
-      "title": "Let's build something that ships",
+      "title": "Say hello",
       "body": [
-        "Talk to me about Android, real-time streaming or device connectivity."
+        "Email is best. Tell me what you're working on and what you need."
       ]
     }
   ],
   "services": [
     {
-      "title": "Android app development",
-      "text": "Kotlin and Jetpack Compose apps with MVVM or MVI, offline-first data and clean architecture, from the first screen to the Play Store release.",
+      "title": "Android apps",
+      "text": "Kotlin and Jetpack Compose apps that work offline, from the first screen to the Play Store release.",
       "tags": [
         "Kotlin",
         "Compose",
@@ -384,24 +404,24 @@ window.PORTFOLIO = {
       ]
     },
     {
-      "title": "Companion apps for hardware",
-      "text": "BLE, Bluetooth and Wi-Fi Direct pairing and provisioning for AR/VR and other connected devices.",
+      "title": "Apps that connect to hardware",
+      "text": "Bluetooth, BLE and Wi-Fi Direct pairing and setup for connected devices.",
       "tags": [
         "BLE",
         "Wi-Fi Direct"
       ]
     },
     {
-      "title": "Real-time video and audio",
-      "text": "WebRTC calls, live streaming and multi-device sync, wired to your backend APIs.",
+      "title": "Video and audio calls",
+      "text": "WebRTC calls, live streams, and keeping several devices in sync.",
       "tags": [
         "WebRTC",
         "Streaming"
       ]
     },
     {
-      "title": "Rescue and modernise",
-      "text": "Crash and performance audits, Compose migration, test coverage and CI for an app that already exists.",
+      "title": "Fix or modernise an existing app",
+      "text": "Crash and performance audits, moving screens to Compose, adding tests and CI.",
       "tags": [
         "Crashlytics",
         "Espresso",
@@ -410,7 +430,7 @@ window.PORTFOLIO = {
     },
     {
       "title": "Training and code review",
-      "text": "Live Kotlin and Android sessions for learners and teams, plus code reviews that raise the standard.",
+      "text": "Live Kotlin and Android sessions for people and teams, and code reviews.",
       "tags": [
         "Kotlin",
         "Mentoring"
@@ -425,35 +445,35 @@ window.PORTFOLIO = {
       "short": "2024–25",
       "role": "Lead Android Engineer",
       "org": "Accenture, client Meta",
-      "text": "AR/VR device provisioning at scale, team of 5."
+      "text": "Android tooling for setting up AR/VR devices. Led a team of 5."
     },
     {
       "when": "12/2021 – 05/2024",
       "short": "2021–24",
       "role": "Senior Software Engineer",
       "org": "Wipro, client Sony India",
-      "text": "WebRTC streaming, watch-party sync, Compose migration."
+      "text": "Streaming, watch-party sync, WebRTC calls and a move to Compose."
     },
     {
       "when": "12/2020 – 12/2021",
       "short": "2020–21",
       "role": "Software Engineer",
       "org": "Fulcrum Digital, Pune",
-      "text": "Led the Al Hilal Mobile Agent App for 500+ insurance field agents."
+      "text": "Led the Al Hilal agent app, used by 500+ insurance agents."
     },
     {
       "when": "02/2020 – 12/2020",
       "short": "2020",
       "role": "Freelance Android Trainer",
       "org": "Self-employed, Bengaluru",
-      "text": "Live Kotlin and Android training for 500 to 1,000 learners in 4 to 5 countries."
+      "text": "Taught live Kotlin and Android to 500–1,000 learners in 4–5 countries."
     },
     {
       "when": "06/2018 – 02/2020",
       "short": "2018–20",
       "role": "Android Developer",
       "org": "NetConnect, Bengaluru",
-      "text": "4+ in-house apps used by 500+ employees."
+      "text": "4+ internal apps for 500+ employees."
     },
     {
       "when": "01/2017 – 01/2018",

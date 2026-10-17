@@ -3,13 +3,12 @@ window.POSTS = [
   {
     "slug": "welcome",
     "date": "2026-10-14",
-    "title": "Welcome: a monthly log of what I build",
-    "summary": "Why this blog exists, what I will post each month, and how this 3D site is put together.",
+    "title": "Hello, and what this page is for",
+    "summary": "Why I started writing here, what to expect each month, and the daily reading list.",
     "tags": [
-      "Monthly update",
       "Meta"
     ],
     "draft": false,
-    "body": "Once a month I will post here: what I shipped, what broke, and what I learned. It is part public notebook and part proof that the work keeps moving.\n\n## What you can expect\n\n- **Monthly update.** Three or four lines on what I worked on.\n- **Deep dives.** One topic at a time, such as BLE pairing on Android, WebRTC sync, or moving a screen to Compose.\n- **Open demos.** Small apps I can share in full, with code.\n\n## How this site works\n\nThe whole portfolio is plain HTML, CSS and JavaScript with three.js for the 3D. Every word on it comes from one file, so adding a job, a project or a post is a copy-and-paste edit. A GitHub workflow publishes it on every change.\n\n> Confidential client work stays confidential. Posts here describe approaches and lessons, never client code or numbers I am not allowed to share.\n\n## Get new posts\n\nUse the RSS link at the top of the blog, or email me and I will say hello back.\n"
+    "body": "I'm starting a small log. About once a month I'll write down what I worked on, what went wrong, and what I learned. If I get something useful out of it, you might too.\n\n## What you'll find here\n\n- **Monthly notes.** A few lines on what I shipped and fixed.\n- **Longer posts.** One topic at a time, like BLE pairing on Android, keeping streams in sync, or moving a screen to Compose.\n- **A daily reading list.** Every morning the site pulls in new posts about AI, Android and Kotlin from sources I follow, so there's always something to read. I don't write those, and each link goes to the original.\n\n## About the work I can't talk about\n\nSome of my work was for clients, so I can't share their code or numbers. I'll write about the problems and the approach, not their internals.\n\n## Say hi\n\nIf you have a question about any of this, email me. I read everything.\n"
   }
 ];

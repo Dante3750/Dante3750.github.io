@@ -1,0 +1,17 @@
+{
+  "maxPerSource": 8,
+  "maxTotal": 60,
+  "maxAgeDays": 21,
+  "sources": [
+    { "name": "Android Developers Blog", "topic": "Android", "url": "https://android-developers.googleblog.com/feeds/posts/default?alt=rss" },
+    { "name": "Kotlin Blog", "topic": "Android", "url": "https://blog.jetbrains.com/kotlin/feed/" },
+    { "name": "Medium: Android", "topic": "Android", "url": "https://medium.com/feed/tag/android-development" },
+    { "name": "Medium: Jetpack Compose", "topic": "Android", "url": "https://medium.com/feed/tag/jetpack-compose" },
+    { "name": "Hugging Face", "topic": "AI", "url": "https://huggingface.co/blog/feed.xml" },
+    { "name": "Google AI", "topic": "AI", "url": "https://blog.google/technology/ai/rss/" },
+    { "name": "OpenAI", "topic": "AI", "url": "https://openai.com/news/rss.xml" },
+    { "name": "Anthropic", "topic": "AI", "url": "https://www.anthropic.com/news/rss.xml" },
+    { "name": "Medium: AI", "topic": "AI", "url": "https://medium.com/feed/tag/artificial-intelligence" },
+    { "name": "Hacker News", "topic": "Tech", "url": "https://hnrss.org/newest?points=150&count=15" }
+  ]
+}

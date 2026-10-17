@@ -1,8 +1,8 @@
 {
   "services": [
     {
-      "title": "Android app development",
-      "text": "Kotlin and Jetpack Compose apps with MVVM or MVI, offline-first data and clean architecture, from the first screen to the Play Store release.",
+      "title": "Android apps",
+      "text": "Kotlin and Jetpack Compose apps that work offline, from the first screen to the Play Store release.",
       "tags": [
         "Kotlin",
         "Compose",
@@ -10,24 +10,24 @@
       ]
     },
     {
-      "title": "Companion apps for hardware",
-      "text": "BLE, Bluetooth and Wi-Fi Direct pairing and provisioning for AR/VR and other connected devices.",
+      "title": "Apps that connect to hardware",
+      "text": "Bluetooth, BLE and Wi-Fi Direct pairing and setup for connected devices.",
       "tags": [
         "BLE",
         "Wi-Fi Direct"
       ]
     },
     {
-      "title": "Real-time video and audio",
-      "text": "WebRTC calls, live streaming and multi-device sync, wired to your backend APIs.",
+      "title": "Video and audio calls",
+      "text": "WebRTC calls, live streams, and keeping several devices in sync.",
       "tags": [
         "WebRTC",
         "Streaming"
       ]
     },
     {
-      "title": "Rescue and modernise",
-      "text": "Crash and performance audits, Compose migration, test coverage and CI for an app that already exists.",
+      "title": "Fix or modernise an existing app",
+      "text": "Crash and performance audits, moving screens to Compose, adding tests and CI.",
       "tags": [
         "Crashlytics",
         "Espresso",
@@ -36,7 +36,7 @@
     },
     {
       "title": "Training and code review",
-      "text": "Live Kotlin and Android sessions for learners and teams, plus code reviews that raise the standard.",
+      "text": "Live Kotlin and Android sessions for people and teams, and code reviews.",
       "tags": [
         "Kotlin",
         "Mentoring"
@@ -51,35 +51,35 @@
       "short": "2024–25",
       "role": "Lead Android Engineer",
       "org": "Accenture, client Meta",
-      "text": "AR/VR device provisioning at scale, team of 5."
+      "text": "Android tooling for setting up AR/VR devices. Led a team of 5."
     },
     {
       "when": "12/2021 – 05/2024",
       "short": "2021–24",
       "role": "Senior Software Engineer",
       "org": "Wipro, client Sony India",
-      "text": "WebRTC streaming, watch-party sync, Compose migration."
+      "text": "Streaming, watch-party sync, WebRTC calls and a move to Compose."
     },
     {
       "when": "12/2020 – 12/2021",
       "short": "2020–21",
       "role": "Software Engineer",
       "org": "Fulcrum Digital, Pune",
-      "text": "Led the Al Hilal Mobile Agent App for 500+ insurance field agents."
+      "text": "Led the Al Hilal agent app, used by 500+ insurance agents."
     },
     {
       "when": "02/2020 – 12/2020",
       "short": "2020",
       "role": "Freelance Android Trainer",
       "org": "Self-employed, Bengaluru",
-      "text": "Live Kotlin and Android training for 500 to 1,000 learners in 4 to 5 countries."
+      "text": "Taught live Kotlin and Android to 500–1,000 learners in 4–5 countries."
     },
     {
       "when": "06/2018 – 02/2020",
       "short": "2018–20",
       "role": "Android Developer",
       "org": "NetConnect, Bengaluru",
-      "text": "4+ in-house apps used by 500+ employees."
+      "text": "4+ internal apps for 500+ employees."
     },
     {
       "when": "01/2017 – 01/2018",
